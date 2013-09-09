@@ -42,7 +42,31 @@
         var w = 960,
             h = 180,
             x = d3.scale.linear().range([0, w]),
-            y = d3.scale.linear().range([0, h]);
+            y = d3.scale.linear().range([0, h]),
+            newX = 0;
+
+        var drag = d3.behavior.drag()
+          .origin(function() { 
+            var t = d3.select(".timeScale g");
+            return {x: -newX,
+                    y: 0};
+          })
+          .on("dragstart", function() {
+            dragStart = [d3.event.sourceEvent.x, d3.event.sourceEvent.y];
+            transformStart = d3.transform(d3.select(".timeScale g").attr("transform")).translate;
+
+            d3.event.sourceEvent.stopPropagation();
+          })
+          .on("drag", function() {
+
+            var currentDrag = [d3.event.sourceEvent.x, d3.event.sourceEvent.pageY];
+            newX = (dragStart[0] - currentDrag[0]);
+
+            d3.select(".timeScale g")
+              .attr("transform", function() {
+                return "translate(" + [ transformStart[0] + -newX ,0 ] + ")scale(" + parseInt(d3.select(".timeScale").style("width"))/961 + ")";
+              });
+          });
 
         // Add class timeScale to whatever div was supplied
         d3.select("#" + div).attr("class", "timeScale");
@@ -55,7 +79,7 @@
 
         // Load the time scale data
        // d3.json("http://testpaleodb.geology.wisc.edu/data1.1/intervals/list.json?order=older&max_ma=4000", function(error, result) {
-        d3.json("js/intervals.json", function(error, result) {
+        d3.json("intervals.json", function(error, result) {
           var data = { oid: 0, col: "#000000", nam: "Geologic Time", children: [] },
               interval_hash = { 0: data };
           for(var i=0; i < result.records.length; i++) {
@@ -82,7 +106,11 @@
               .attr("height", function(d) { return y(d.dy); })
               .attr("fill", function(d) { return d.col || "#000000"; })
               .attr("id", function(d) { return "t" + d.oid; })
-              .on("click", timeScale.goTo);
+              .call(drag)
+              .on("click", function(d) {
+                if (d3.event.defaultPrevented) return;
+                timeScale.goTo(d);
+              });
           
             // Add the full labels
           time.selectAll("fullName")
@@ -96,7 +124,11 @@
               .attr("class", function(d) { return "fullName level" + d.lvl; })
               .attr("id", function(d) { return "l" + d.oid; })
               .attr("x", function(d) { return timeScale.labelX(d); })
-              .on("click", timeScale.goTo);
+              .call(drag)
+              .on("click", function(d) {
+                if (d3.event.defaultPrevented) return;
+                timeScale.goTo(d);
+              });
 
             // Add the abbreviations
           time.selectAll("abbrevs")
@@ -249,9 +281,18 @@
             return e.nam === d;
           });
           d = d[0][0].__data__;
+        } else if (d.children.length < 1) {
+          var d = d.parent;
         } else {
           var d = d;
         }
+
+        // Reset panning  
+
+        d3.select(".timeScale g")
+        .attr("transform", function() {
+          return "scale(" + parseInt(d3.select(".timeScale").style("width"))/961 + ")";
+        });
         // var n keeps track of the transition
         var n = 0,
           x = d3.scale.linear().range([0, 960]);
@@ -349,6 +390,8 @@
     
     // Start
     timeScale.init("geoTime");
+
+
     </script>
   </body>
 </html>
