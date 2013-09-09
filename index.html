@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Geologic Time</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <style type="text/css">
+      .timeScale {
+        font-family: Helvetica, sans-serif;
+        font-weight: 200;
+        font-size: 14px;
+        color:#333;
+        font-weight: 200;
+        cursor: pointer;
+      }
+      rect {
+        stroke: #fff;
+        stroke-width:1px;
+      }
+      .abbr {
+        display:none;
+      }
+      #l0 {
+        color:#fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="geoTime"></div>
+    <script type="text/javascript">
+
+    // http://stackoverflow.com/questions/14167863/how-can-i-bring-a-circle-to-the-front-with-d3
+    d3.selection.prototype.moveToFront = function() {
+      return this.each(function(){
+        this.parentNode.appendChild(this);
+      });
+    };
+
+    var timeScale = {
+      "init": function(div) {
+
+        var w = 960,
+            h = 180,
+            x = d3.scale.linear().range([0, w]),
+            y = d3.scale.linear().range([0, h]);
+
+        // Add class timeScale to whatever div was supplied
+        d3.select("#" + div).attr("class", "timeScale");
+
+        // Create the SVG for the chart
+        var time = d3.select("#" + div).append("svg:svg")
+            .attr("width", w)
+            .attr("height", h)
+            .append("g");
+
+        // Load the time scale data
+       // d3.json("http://testpaleodb.geology.wisc.edu/data1.1/intervals/list.json?order=older&max_ma=4000", function(error, result) {
+        d3.json("js/intervals.json", function(error, result) {
+          var data = { oid: 0, col: "#000000", nam: "Geologic Time", children: [] },
+              interval_hash = { 0: data };
+          for(var i=0; i < result.records.length; i++) {
+            var r = result.records[i];
+            r.children = [];
+            r.pid = r.pid || 0;
+            r.abr = r.abr || r.nam.charAt(0); 
+            r.total = r.eag - r.lag;
+            interval_hash[r.oid] = r;
+            interval_hash[r.pid].children.push(r);
+          }
+            // Create a new d3 partition layout
+          var partition = d3.layout.partition()
+              .sort(function(d) { d3.ascending(d); })
+              .value(function(d) { return d.total; });
+
+          // Create the rectangles
+          time.selectAll("rect")
+              .data(partition.nodes(data))
+            .enter().append("svg:rect")
+              .attr("x", function(d) { return x(d.x); })
+              .attr("y", function(d) { return y(d.y); })
+              .attr("width", function(d) { return x(d.dx); })
+              .attr("height", function(d) { return y(d.dy); })
+              .attr("fill", function(d) { return d.col || "#000000"; })
+              .attr("id", function(d) { return "t" + d.oid; })
+              .on("click", timeScale.goTo);
+          
+            // Add the full labels
+          time.selectAll("fullName")
+              .data(partition.nodes(data))
+            .enter().append("svg:text")
+              .text(function(d) { return d.nam; })
+              .attr("x", 1)
+              .attr("y", function(d) { return y(d.y) + 18;})
+              .attr("width", function() { return this.getComputedTextLength(); })
+              .attr("height", function(d) { return y(d.dy); })
+              .attr("class", function(d) { return "fullName level" + d.lvl; })
+              .attr("id", function(d) { return "l" + d.oid; })
+              .attr("x", function(d) { return timeScale.labelX(d); })
+              .on("click", timeScale.goTo);
+
+            // Add the abbreviations
+          time.selectAll("abbrevs")
+              .data(partition.nodes(data))
+            .enter().append("svg:text")
+              .attr("x", 1)
+              .attr("y", function(d) { return y(d.y) + 18; })
+              .attr("width", 30)
+              .attr("height", function(d) { return y(d.dy); })
+              .text(function(d) { return d.abr || d.nam.charAt(0); })
+              .attr("class", function(d) { return "abbr level" + d.lvl; })
+              .attr("id", function(d) { return "a" + d.oid; })
+              .attr("x", function(d) { return timeScale.labelAbbrX(d); })
+              .on("click", timeScale.goTo);
+
+          // Position the labels for the first time
+          timeScale.goTo(interval_hash[0]);
+
+          // Remove the Geologic time abbreviation
+          d3.select(".abbr.levelundefined").remove();
+
+          // Open to Phanerozoic 
+          //timeScale.goTo(interval_hash[751]);
+
+        }); // End PaleoDB json callback
+
+        //attach window resize listener to the window
+        d3.select(window).on("resize", timeScale.sizeChange);
+
+        // Size time scale to window
+        timeScale.sizeChange();
+
+      }, // End time.init() 
+
+      "labelLevels": function(d) {
+          // Center whichever interval was clicked
+          d3.select("#l" + d.oid).attr("x", 430);
+
+          // Position all the parent labels in the middle of the scale
+          if (typeof d.parent !== 'undefined') {
+            var depth = d.depth,
+                loc = "d.parent";
+            for (var i=0; i<depth;i++) {
+              var parent = eval(loc).nam;
+              d3.selectAll('.abbr').filter(function(d) {
+                return d.nam === parent;
+              }).attr("x", 430);
+              d3.selectAll('.fullName').filter(function(d) {
+                return d.nam === parent;
+              }).attr("x", 430);
+              loc += ".parent";
+            }
+            d3.selectAll('.abbr').filter(function(d) {
+              return d.nam === parent;
+            }).attr("x", 430);
+            d3.selectAll('.fullName').filter(function(d) {
+              return d.nam === parent;
+            }).attr("x", 430);
+          }
+
+          switch (d.lvl) {
+            case 'undefined': 
+              d3.selectAll('.level1').style("display", "block");
+              d3.selectAll('.level2, .level3, .level4, .level5').style("display", "none");
+              d3.selectAll('.abbr.level1').style("display", "none");
+              d3.selectAll('.abbr.level2').style("display", "block");
+              break;
+            case 1:
+              d3.selectAll('.level1, .level2').style("display", "block");
+              d3.selectAll('.level3, .level4, .level5').style("display", "none");
+              d3.selectAll('.abbr.level3').style("display", "block");
+              d3.selectAll('.abbr.level1, .abbr.level2').style("display", "none");
+
+              // Hide Quaternary abbreviation
+              d3.select("#a12").style("display", "none");
+
+              break;
+            case 2:
+              d3.selectAll('.level1, .level2, .level3').style("display", "block");
+              d3.selectAll('.level4, .level5').style("display", "none");
+              d3.selectAll('.abbr.level4').style("display", "block");
+              d3.selectAll('.abbr.level1, .abbr.level2, .abbr.level3').style("display", "none");
+
+              // Hide Quaternary label
+              d3.select("#l12").style("display", "none");
+              // Show Quaternary abbreviation
+              d3.select("#a12").style("display", "block");
+
+              d3.selectAll('.abbr').filter(function(d) {
+                return d.abr === "H";
+              }).style("display", "none");
+              break;
+            case 3:
+              d3.selectAll('.level1, .level2, .level3, .level4').style("display", "block");
+              d3.selectAll('.level5').style("display", "none");
+              d3.selectAll('.abbr.level5').style("display", "block");
+              d3.selectAll('.abbr.level4, .abbr.level3, .abbr.level2').style("display", "none");
+
+              // Hide Holocene label
+              d3.select("#l32").style("display", "none");
+
+              d3.selectAll('.abbr').filter(function(d) {
+                return d.abr === "H";
+              }).style("display", "block");
+              break;
+            case 4:
+              d3.selectAll('.level1, .level2, .level3, .level4, .level5').style("display", "block");
+              d3.selectAll('.abbr').style("display", "none");
+              if (d.nam !== "Holocene") {
+                // Hide Holocene label
+                d3.select("#l32").style("display", "none");
+
+                d3.selectAll('.abbr').filter(function(d) {
+                  return d.abr === "H";
+                }).style("display", "block");
+              }
+              break;
+            case 5:
+              d3.selectAll('.level1, .level2, .level3, .level4, .level5').style("display", "block");
+              d3.selectAll('.abbr').style("display", "none");
+              break;
+            default:
+              d3.selectAll('.level1').style("display", "block");
+              d3.selectAll('.level2, .level3, .level4, .level5').style("display", "none");
+              d3.selectAll('.abbr.level1').style("display", "none");
+              d3.selectAll('.abbr.level2').style("display", "block");
+              break;
+          }
+      }, // End time.labelLevels
+
+      "labelAbbrX": function(d) {
+        var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
+            rectX = parseFloat(d3.select("#t" + d.oid).attr("x")),
+            labelWidth = d3.select("#a" + d.oid).node().getComputedTextLength();
+
+        return rectX + (rectWidth - labelWidth) / 2;
+      },
+
+      "labelX": function(d) {
+        var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
+            rectX = parseFloat(d3.select("#t" + d.oid).attr("x")),
+            labelWidth = d3.select("#l" + d.oid).node().getComputedTextLength();
+
+        return rectX + (rectWidth - labelWidth) / 2;
+      },
+
+      "goTo": function(d) {
+        if (typeof d == "string") {
+          var d = d3.selectAll('rect').filter(function(e) {
+            return e.nam === d;
+          });
+          d = d[0][0].__data__;
+        } else {
+          var d = d;
+        }
+        // var n keeps track of the transition
+        var n = 0,
+          x = d3.scale.linear().range([0, 960]);
+
+        d3.selectAll(".fullName")
+          .style("fill", "rgba(0,0,0,0)")
+          .style("display", "block");
+        d3.selectAll(".abbr")
+          .style("fill", "rgba(0,0,0,0)")
+          .style("display", "block");
+
+        x.domain([d.x, d.x + d.dx]);
+
+        // When complete, calls labelTrans() 
+        d3.selectAll("rect").transition()
+          .duration(750)
+          .each(function(){ ++n; })
+          .attr("x", function(d) { return x(d.x); })
+          .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
+          .each("end", function() { if (!--n) { timeScale.labelTrans(d); }});
+      },
+
+      "labelTrans": function(d) {
+        // var n keeps track of the transition
+        var n = 0,
+            x = d3.scale.linear().range([0, 960]),
+            y = d3.scale.linear().range([0, 120]);
+
+        x.domain([d.x, d.x + d.dx]);
+
+        // Move the full names
+        d3.selectAll(".fullName").transition()
+          .duration(10)
+          .each(function(){ ++n; })
+          .attr("x", function(d) { return timeScale.labelX(d); })
+          .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); })
+          .each("end", function() { if (!--n) { timeScale.labelLevels(d); }});
+
+        // Move the abbreviations
+        d3.selectAll(".abbr").transition()
+          .duration(300)
+          .each(function(){ ++n; })
+          .attr("x", function(d) { return timeScale.labelAbbrX(d); })
+          .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); })
+          .each("end", function() { 
+            if (!--n) {
+              timeScale.labelLevels(d);
+              d3.select("#l0").style("fill", "#fff");
+            } else {
+              d3.selectAll(".fullName").style("fill", "#000");
+              d3.selectAll(".abbr").style("fill", "#000");
+            }
+          });
+      },
+
+      "highlight": function(d) {
+        d3.selectAll("rect").style("stroke", "#fff");
+        if (d.cxi) {
+          var id = d.cxi;
+          d3.selectAll("rect#t" + d.cxi).style("stroke", "#000").moveToFront();
+          d3.selectAll("#l" + d.cxi).moveToFront();
+        } else if (typeof d == "string") {
+          var id = d3.selectAll('rect').filter(function(e) {
+            return e.nam === d;
+          }).attr("id");
+          id = id.replace("t", "");
+        } else {
+          var id = d3.select(d).attr("id");
+          id = id.replace("p", "");
+        }
+        d3.selectAll("rect#t" + id).style("stroke", "#000").moveToFront();
+        d3.selectAll("#l" + id).moveToFront();
+        d3.selectAll(".abbr").moveToFront();
+      },
+
+      "unhighlight": function() {
+        d3.selectAll("rect").style("stroke", "#fff");
+      },
+
+      "sizeChange": function() {
+        d3.select(".timeScale g")
+          .attr("transform", function() {
+            return "scale(" + parseInt(d3.select(".timeScale").style("width"))/961 + ")";
+          });
+
+        d3.select(".timeScale svg")
+          .style("width", function() {
+            return d3.select(".timeScale").style("width");
+           })
+          .style("height", function() {
+            return parseInt(d3.select(".timeScale").style("width")) * 0.20 + "px";
+          });
+      }
+    }
+    
+    // Start
+    timeScale.init("geoTime");
+    </script>
+  </body>
+</html>
