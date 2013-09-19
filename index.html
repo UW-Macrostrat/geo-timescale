@@ -26,6 +26,21 @@
       line {
         stroke:#777;
       }
+      .level1 {
+        font-size: 1em;
+      }
+      .level2 {
+        font-size: 0.9em;
+      }
+      .level3 {
+        font-size: 0.75em;
+      }
+      .level4 {
+        font-size: 0.65em;
+      }
+      .level5 {
+        font-size: 0.6em;
+      }
     </style>
   </head>
   <body>
@@ -61,10 +76,6 @@
             d3.event.sourceEvent.stopPropagation();
           })
           .on("drag", function() {
-            //var width = parseInt(d3.select(".timeScale svg").style("width"));
-            //var groupBbox = d3.select(".timeScale svg").node().getBBox();
-            //var groupRightX = groupBbox.width - Math.abs(groupBbox.x);
-
             var currentDrag = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
             newX = (dragStart[0] - currentDrag[0]);
             //if (groupRightX + 2 < width) {return};
@@ -123,14 +134,6 @@
 
           var scaleBar = scale.selectAll("rect")
               .data(partition.nodes(data));
-
-         /* scaleBar.enter().append("svg:rect")
-              .attr("x", function(d) { return x(d.x); })
-              .attr("y", 0)
-              .attr("width", function(d) { return x(d.dx); })
-              .attr("height", function(d) { return y(d.dy)/4; })
-              .attr("fill", function(d) { return d.col || "#000000"; })
-              .attr("class", function(d) { return "scale s" + d.lvl; });*/
 
           var hash = scaleBar.enter().append("g")
             .attr("class", function(d) {return "tickGroup s" + d.lvl})
@@ -251,85 +254,13 @@
               return d.nam === parent;
             }).attr("x", 430);
           }
-
-/*
-          switch (d.lvl) {
-            case 'undefined': 
-              d3.selectAll('.level1').style("display", "block");
-              d3.selectAll('.level2, .level3, .level4, .level5').style("display", "none");
-              d3.selectAll('.abbr.level1').style("display", "none");
-              d3.selectAll('.abbr.level2').style("display", "block");
-              break;
-            case 1:
-              d3.selectAll('.level1, .level2').style("display", "block");
-              d3.selectAll('.level3, .level4, .level5').style("display", "none");
-              d3.selectAll('.abbr.level3').style("display", "block");
-              d3.selectAll('.abbr.level1, .abbr.level2').style("display", "none");
-
-              // Hide Quaternary abbreviation
-              d3.select("#a12").style("display", "none");
-
-              break;
-            case 2:
-              d3.selectAll('.level1, .level2, .level3').style("display", "block");
-              d3.selectAll('.level4, .level5').style("display", "none");
-              d3.selectAll('.abbr.level4').style("display", "block");
-              d3.selectAll('.abbr.level1, .abbr.level2, .abbr.level3').style("display", "none");
-
-              // Hide Quaternary label
-              d3.select("#l12").style("display", "none");
-              // Show Quaternary abbreviation
-              d3.select("#a12").style("display", "block");
-
-              d3.selectAll('.abbr').filter(function(d) {
-                return d.abr === "H";
-              }).style("display", "none");
-              break;
-            case 3:
-              d3.selectAll('.level1, .level2, .level3, .level4').style("display", "block");
-              d3.selectAll('.level5').style("display", "none");
-              d3.selectAll('.abbr.level5').style("display", "block");
-              d3.selectAll('.abbr.level4, .abbr.level3, .abbr.level2').style("display", "none");
-
-              // Hide Holocene label
-              d3.select("#l32").style("display", "none");
-
-              d3.selectAll('.abbr').filter(function(d) {
-                return d.abr === "H";
-              }).style("display", "block");
-              break;
-            case 4:
-              d3.selectAll('.level1, .level2, .level3, .level4, .level5').style("display", "block");
-              d3.selectAll('.abbr').style("display", "none");
-              if (d.nam !== "Holocene") {
-                // Hide Holocene label
-                d3.select("#l32").style("display", "none");
-                d3.select("#l3002").style("display", "none");
-              }
-              break;
-            case 5:
-              d3.selectAll('.level1, .level2, .level3, .level4, .level5').style("display", "block");
-              d3.selectAll('.abbr').style("display", "none");
-              if (d.nam !== "Holocene") {
-                // Hide Holocene label
-                d3.select("#l32").style("display", "none");
-                d3.select("#l3002").style("display", "none");
-              }
-              break;
-            default:
-              d3.selectAll('.level1').style("display", "block");
-              d3.selectAll('.level2, .level3, .level4, .level5').style("display", "none");
-              d3.selectAll('.abbr.level1').style("display", "none");
-              d3.selectAll('.abbr.level2').style("display", "block");
-              break;
-          }*/
       }, // End time.labelLevels
 
       "labelAbbrX": function(d) {
         var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
             rectX = parseFloat(d3.select("#t" + d.oid).attr("x")),
             labelWidth = d3.select("#a" + d.oid).node().getComputedTextLength();
-        if (rectWidth < labelWidth) {
+        if (rectWidth - 6 < labelWidth) {
            d3.select("#a" + d.oid).style("display", "none");
         }
         return rectX + (rectWidth - labelWidth) / 2;
@@ -339,7 +270,7 @@
         var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
             rectX = parseFloat(d3.select("#t" + d.oid).attr("x")),
             labelWidth = d3.select("#l" + d.oid).node().getComputedTextLength();
-        if (rectWidth < labelWidth) {
+        if (rectWidth - 6 < labelWidth) {
            d3.select("#l" + d.oid).style("display", "none");
         } else {
           d3.select("#a" + d.oid).style("display", "none");
@@ -407,36 +338,6 @@
           .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
           .each("end", function() { if (!--n) { timeScale.labelTrans(d); }});
 
-        
-/*
-        d3.selectAll(".rectSmall").remove();
-        d3.selectAll(".tickGroup").remove();
-
-        var g = d3.select(".timeScale g").selectAll(".rectSmall")
-           .data(d.children);
-
-        g.enter().append("rect")
-            .attr("x", function(d) { return x(d.x); })
-            .attr("y", 190)
-            .attr("class", "rectSmall")
-            .attr("fill", function(d) { return d.col || "#000000"; })
-            .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
-            .attr("height", 10);
-
-        var hash = g.enter().append("g")
-          .attr("class", "tickGroup");
-
-        hash.append("line")
-          .attr("x1", function(d) {return x(d.x);})
-          .attr("y1", 191)
-          .attr("x2", function(d) {return x(d.x);})
-          .attr("y2", 205);
-
-        hash.append("text")
-          .attr("x", function(d) {return x(d.x);})
-          .attr("y", 220)
-          .style("text-anchor", "middle")
-          .text(function(d) {return d.eag});*/
       },
 
       "labelTrans": function(d) {
