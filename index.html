@@ -127,6 +127,7 @@
               .attr("height", function(d) { return y(d.dy); })
               .attr("fill", function(d) { return d.col || "#000000"; })
               .attr("id", function(d) { return "t" + d.oid; })
+              .style("opacity", 0.83)
               .call(drag)
               .on("click", function(d) {
                 if (d3.event.defaultPrevented) return;
