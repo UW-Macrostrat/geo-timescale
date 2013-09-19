@@ -44,9 +44,9 @@
 
         var w = 960,
             h = 180,
-            x = d3.scale.linear().range([0, w]),
+            x = d3.scale.linear().range([0, w - 5]),
             y = d3.scale.linear().range([0, h]),
-            newX = 0;
+            newX = 0.01;
 
         var drag = d3.behavior.drag()
           .origin(function() { 
@@ -55,8 +55,8 @@
                     y: 0};
           })
           .on("dragstart", function() {
-            dragStart = [d3.event.sourceEvent.x, d3.event.sourceEvent.y];
-            transformStart = d3.transform(d3.select(".timeScale g").attr("transform")).translate;
+            dragStart = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
+            transformStart = d3.transform(d3.select(".timeScale").select("g").attr("transform")).translate;
 
             d3.event.sourceEvent.stopPropagation();
           })
@@ -64,19 +64,14 @@
             //var width = parseInt(d3.select(".timeScale svg").style("width"));
             //var groupBbox = d3.select(".timeScale svg").node().getBBox();
             //var groupRightX = groupBbox.width - Math.abs(groupBbox.x);
-            //console.log("width - ", width);
-            //console.log("groupRight - ", groupRightX);
-            
-            
-            var currentDrag = [d3.event.sourceEvent.x, d3.event.sourceEvent.pageY];
-            newX = (dragStart[0] - currentDrag[0]);
-            //console.log(groupRightX);
 
+            var currentDrag = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
+            newX = (dragStart[0] - currentDrag[0]);
             //if (groupRightX + 2 < width) {return};
 
-            d3.select(".timeScale g")
+            d3.select(".timeScale").select("g")
               .attr("transform", function() {
-                return "translate(" + [ transformStart[0] + -newX ,0 ] + ")scale(" + parseInt(d3.select(".timeScale").style("width"))/961 + ")";
+                return "translate(" + [ parseInt(transformStart[0] + -newX), 0 ] + ")scale(" + parseInt(d3.select(".timeScale").style("width"))/961 + ")";
               });
           });
 
@@ -90,7 +85,7 @@
             .append("g");
 
         var scale = time.append("g")
-          .attr("transform", "translate(0,190)");
+          .attr("transform", "translate(0,175)");
         // Load the time scale data
        // d3.json("http://testpaleodb.geology.wisc.edu/data1.1/intervals/list.json?order=older&max_ma=4000", function(error, result) {
         d3.json("intervals.json", function(error, result) {
@@ -129,17 +124,17 @@
           var scaleBar = scale.selectAll("rect")
               .data(partition.nodes(data));
 
-          scaleBar.enter().append("svg:rect")
+         /* scaleBar.enter().append("svg:rect")
               .attr("x", function(d) { return x(d.x); })
               .attr("y", 0)
               .attr("width", function(d) { return x(d.dx); })
               .attr("height", function(d) { return y(d.dy)/4; })
               .attr("fill", function(d) { return d.col || "#000000"; })
-              .attr("class", function(d) { return "scale s" + d.lvl; });
+              .attr("class", function(d) { return "scale s" + d.lvl; });*/
 
           var hash = scaleBar.enter().append("g")
             .attr("class", function(d) {return "tickGroup s" + d.lvl})
-            .attr("transform", function(d) { return "translate(" + x(d.x) + ", 25)"});
+            .attr("transform", function(d) { return "translate(" + x(d.x) + ", 0)"});
 
           hash.append("line")
             .attr("x1", 0)
@@ -154,7 +149,28 @@
             .style("text-anchor", "middle")
             .style("font-size", "0.7em")
             .style("fill", "#777")
-            .text(function(d) {return d.eag});
+            .text(function(d) {return parseFloat(d.eag).toFixed(0)});
+
+          // Create a tick for now
+          var now = scale.append("g")
+            .data([{x:1, y:0}])
+            .attr("class", "tickGroup s1 s2 s3 s4 s5")
+            .attr("transform","translate(955, 0)");
+
+          now.append("line")
+            .attr("x1", 0)
+            .attr("y1", 7.5)
+            .attr("x2", 0)
+            .attr("y2", 12)
+            .style("stroke-width", "0.05em");
+
+          now.append("text")
+            .attr("x", 0)
+            .attr("y", 22)
+            .style("text-anchor", "end")
+            .style("font-size", "0.7em")
+            .style("fill", "#777")
+            .text("0");
 
             // Add the full labels
           time.selectAll("fullName")
@@ -236,6 +252,7 @@
             }).attr("x", 430);
           }
 
+/*
           switch (d.lvl) {
             case 'undefined': 
               d3.selectAll('.level1').style("display", "block");
@@ -287,15 +304,17 @@
               if (d.nam !== "Holocene") {
                 // Hide Holocene label
                 d3.select("#l32").style("display", "none");
-
-                d3.selectAll('.abbr').filter(function(d) {
-                  return d.abr === "H";
-                }).style("display", "block");
+                d3.select("#l3002").style("display", "none");
               }
               break;
             case 5:
               d3.selectAll('.level1, .level2, .level3, .level4, .level5').style("display", "block");
               d3.selectAll('.abbr').style("display", "none");
+              if (d.nam !== "Holocene") {
+                // Hide Holocene label
+                d3.select("#l32").style("display", "none");
+                d3.select("#l3002").style("display", "none");
+              }
               break;
             default:
               d3.selectAll('.level1').style("display", "block");
@@ -303,14 +322,16 @@
               d3.selectAll('.abbr.level1').style("display", "none");
               d3.selectAll('.abbr.level2').style("display", "block");
               break;
-          }
+          }*/
       }, // End time.labelLevels
 
       "labelAbbrX": function(d) {
         var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
             rectX = parseFloat(d3.select("#t" + d.oid).attr("x")),
             labelWidth = d3.select("#a" + d.oid).node().getComputedTextLength();
-
+        if (rectWidth < labelWidth) {
+           d3.select("#a" + d.oid).style("display", "none");
+        }
         return rectX + (rectWidth - labelWidth) / 2;
       },
 
@@ -318,6 +339,11 @@
         var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
             rectX = parseFloat(d3.select("#t" + d.oid).attr("x")),
             labelWidth = d3.select("#l" + d.oid).node().getComputedTextLength();
+        if (rectWidth < labelWidth) {
+           d3.select("#l" + d.oid).style("display", "none");
+        } else {
+          d3.select("#a" + d.oid).style("display", "none");
+        }
 
         return rectX + (rectWidth - labelWidth) / 2;
       },
@@ -339,6 +365,7 @@
         d3.selectAll(".scale").style("display", "none");
         d3.selectAll(".tickGroup").style("display", "none");
         d3.selectAll(".s" + depth).style("display", "block");
+        d3.selectAll(".tickGroup").select("text").style("text-anchor", "middle");
 
         // Reset panning  
         d3.select(".timeScale g")
@@ -348,7 +375,7 @@
 
         // var n keeps track of the transition
         var n = 0,
-          x = d3.scale.linear().range([0, 960]);
+          x = d3.scale.linear().range([5, 955]);
 
         d3.selectAll(".fullName")
           .style("fill", "rgba(0,0,0,0)")
@@ -361,7 +388,16 @@
 
         d3.selectAll(".tickGroup").transition()
           .duration(750)
-          .attr("transform", function(d) { return "translate(" + x(d.x) + ", 0)"; });
+          .attr("transform", function(d) { 
+            if (x(d.x) == 5) {
+              d3.select(this).select("text")
+                .style("text-anchor", "start");
+            } else if (x(d.x) == 955) {
+              d3.select(this).select("text")
+                .style("text-anchor", "end");
+            }
+            return "translate(" + x(d.x) + ", 0)"; 
+          });
 
         // When complete, calls labelTrans() 
         d3.selectAll("rect").transition()
@@ -406,7 +442,7 @@
       "labelTrans": function(d) {
         // var n keeps track of the transition
         var n = 0,
-            x = d3.scale.linear().range([0, 960]),
+            x = d3.scale.linear().range([0, 955]),
             y = d3.scale.linear().range([0, 120]);
 
         x.domain([d.x, d.x + d.dx]);
