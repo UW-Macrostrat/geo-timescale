@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+
     <title>Geologic Time</title>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
     <style type="text/css">
       .timeScale {
         font-family: Helvetica, sans-serif;
@@ -45,9 +46,11 @@
   </head>
   <body>
     <div id="geoTime"></div>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript">
 
     // http://stackoverflow.com/questions/14167863/how-can-i-bring-a-circle-to-the-front-with-d3
+    // Necessary for highlighting
     d3.selection.prototype.moveToFront = function() {
       return this.each(function(){
         this.parentNode.appendChild(this);
@@ -66,8 +69,7 @@
         var drag = d3.behavior.drag()
           .origin(function() { 
             var t = d3.select(".timeScale g");
-            return {x: -newX,
-                    y: 0};
+            return {x: -newX, y: 0};
           })
           .on("dragstart", function() {
             dragStart = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
@@ -78,7 +80,6 @@
           .on("drag", function() {
             var currentDrag = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
             newX = (dragStart[0] - currentDrag[0]);
-            //if (groupRightX + 2 < width) {return};
 
             d3.select(".timeScale").select("g")
               .attr("transform", function() {
@@ -154,7 +155,7 @@
             .style("fill", "#777")
             .text(function(d) {return parseFloat(d.eag).toFixed(0)});
 
-          // Create a tick for now
+          // Create a tick for year 0
           var now = scale.append("g")
             .data([{x:1, y:0}])
             .attr("class", "tickGroup s1 s2 s3 s4 s5")
@@ -175,7 +176,7 @@
             .style("fill", "#777")
             .text("0");
 
-            // Add the full labels
+          // Add the full labels
           time.selectAll("fullName")
               .data(partition.nodes(data))
             .enter().append("svg:text")
@@ -193,7 +194,7 @@
                 timeScale.goTo(d);
               });
 
-            // Add the abbreviations
+          // Add the abbreviations
           time.selectAll("abbrevs")
               .data(partition.nodes(data))
             .enter().append("svg:text")
@@ -260,7 +261,7 @@
         var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
             rectX = parseFloat(d3.select("#t" + d.oid).attr("x")),
             labelWidth = d3.select("#a" + d.oid).node().getComputedTextLength();
-        if (rectWidth - 6 < labelWidth) {
+        if (rectWidth - 8 < labelWidth) {
            d3.select("#a" + d.oid).style("display", "none");
         }
         return rectX + (rectWidth - labelWidth) / 2;
@@ -270,7 +271,7 @@
         var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
             rectX = parseFloat(d3.select("#t" + d.oid).attr("x")),
             labelWidth = d3.select("#l" + d.oid).node().getComputedTextLength();
-        if (rectWidth - 6 < labelWidth) {
+        if (rectWidth - 8 < labelWidth) {
            d3.select("#l" + d.oid).style("display", "none");
         } else {
           d3.select("#a" + d.oid).style("display", "none");
@@ -306,16 +307,18 @@
 
         // var n keeps track of the transition
         var n = 0,
-          x = d3.scale.linear().range([5, 955]);
+            x = d3.scale.linear().range([5, 955]);
 
+        x.domain([d.x, d.x + d.dx]);
+
+        // "Hide" the labels during the transition
+        // Cannot calculate the correct position if display:none is used
         d3.selectAll(".fullName")
           .style("fill", "rgba(0,0,0,0)")
           .style("display", "block");
         d3.selectAll(".abbr")
           .style("fill", "rgba(0,0,0,0)")
           .style("display", "block");
-
-        x.domain([d.x, d.x + d.dx]);
 
         d3.selectAll(".tickGroup").transition()
           .duration(750)
@@ -415,7 +418,6 @@
     
     // Start
     timeScale.init("geoTime");
-
 
     </script>
   </body>
