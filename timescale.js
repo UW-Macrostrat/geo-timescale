@@ -23,12 +23,12 @@ var timescale = (function() {
 
       var drag = d3.behavior.drag()
         .origin(function() { 
-          var t = d3.select(".timeScale g");
+          var t = d3.select(".timescale g");
           return {x: -newX, y: 0};
         })
         .on("dragstart", function() {
           dragStart = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
-          transformStart = d3.transform(d3.select(".timeScale").select("g").attr("transform")).translate;
+          transformStart = d3.transform(d3.select(".timescale").select("g").attr("transform")).translate;
 
           d3.event.sourceEvent.stopPropagation();
         })
@@ -36,14 +36,14 @@ var timescale = (function() {
           var currentDrag = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
           newX = (dragStart[0] - currentDrag[0]);
 
-          d3.select(".timeScale").select("g")
+          d3.select(".timescale").select("g")
             .attr("transform", function() {
-              return "translate(" + [ parseInt(transformStart[0] + -newX), 0 ] + ")scale(" + parseInt(d3.select(".timeScale").style("width"))/961 + ")";
+              return "translate(" + [ parseInt(transformStart[0] + -newX), 0 ] + ")scale(" + parseInt(d3.select(".timescale").style("width"))/961 + ")";
             });
         });
 
-      // Add class timeScale to whatever div was supplied
-      d3.select("#" + div).attr("class", "timeScale");
+      // Add class timescale to whatever div was supplied
+      d3.select("#" + div).attr("class", "timescale");
 
       // Create the SVG for the chart
       var time = d3.select("#" + div).append("svg:svg")
@@ -89,7 +89,7 @@ var timescale = (function() {
             .style("opacity", 0.83)
             .call(drag)
             .on("click", function(d) {
-              timeScale.goTo(d);
+              timescale.goTo(d);
             });
 
         // Scale bar for the bottom of the graph
@@ -151,10 +151,10 @@ var timescale = (function() {
             .attr("height", function(d) { return y(d.dy); })
             .attr("class", function(d) { return "fullName level" + d.lvl; })
             .attr("id", function(d) { return "l" + d.oid; })
-            .attr("x", function(d) { return timeScale.labelX(d); })
+            .attr("x", function(d) { return timescale.labelX(d); })
             .call(drag)
             .on("click", function(d) {
-              timeScale.goTo(d);
+              timescale.goTo(d);
             });
 
         // Add the abbreviations
@@ -168,27 +168,27 @@ var timescale = (function() {
             .text(function(d) { return d.abr || d.nam.charAt(0); })
             .attr("class", function(d) { return "abbr level" + d.lvl; })
             .attr("id", function(d) { return "a" + d.oid; })
-            .attr("x", function(d) { return timeScale.labelAbbrX(d); })
+            .attr("x", function(d) { return timescale.labelAbbrX(d); })
             .on("click", function(d) {
-              timeScale.goTo(d);
+              timescale.goTo(d);
             });
 
         // Position the labels for the first time
-        timeScale.goTo(interval_hash[0]);
+        timescale.goTo(interval_hash[0]);
 
         // Remove the Geologic time abbreviation
         d3.select(".abbr.levelundefined").remove();
 
         // Open to Phanerozoic 
-        timeScale.goTo(interval_hash[751]);
+        timescale.goTo(interval_hash[751]);
 
       }); // End PaleoDB json callback
 
       //attach window resize listener to the window
-      d3.select(window).on("resize", timeScale.resize);
+      d3.select(window).on("resize", timescale.resize);
 
       // Size time scale to window
-      timeScale.resize();
+      timescale.resize();
 
     },
 
@@ -261,7 +261,7 @@ var timescale = (function() {
       var rectHeight = parseFloat(d3.select("#t" + d.oid).attr("height")), 
           rectY = parseFloat(d3.select("#t" + d.oid).attr("y")),
           labelHeight = d3.select("#l" + d.oid).node().getBBox().height,
-          scale = parseInt(d3.select(".timeScale").style("width"))/961;
+          scale = parseInt(d3.select(".timescale").style("width"))/961;
 
       return (rectY * 0.8) + ((rectHeight - labelHeight) / 2) + 8;
     },
@@ -270,7 +270,7 @@ var timescale = (function() {
       var rectHeight = parseFloat(d3.select("#t" + d.oid).attr("height")), 
           rectY = parseFloat(d3.select("#t" + d.oid).attr("y")),
           labelHeight = d3.select("#l" + d.oid).node().getBBox().height,
-          scale = parseInt(d3.select(".timeScale").style("width"))/961;
+          scale = parseInt(d3.select(".timescale").style("width"))/961;
 
       return (rectY * 0.8) + (rectHeight - labelHeight) / 2;
     },
@@ -292,7 +292,7 @@ var timescale = (function() {
       }
 
       // Stores the currently focused time interval for state restoration purposes
-      timeScale.currentInterval = d;
+      timescale.currentInterval = d;
 
       // Adjust the bottom scale
       var depth = (d.depth != 'undefined') ? parseInt(d.depth) + 1 : 1;
@@ -301,9 +301,9 @@ var timescale = (function() {
       d3.selectAll(".s" + depth).style("display", "block");
 
       // Reset panning  
-      d3.select(".timeScale g")
+      d3.select(".timescale g")
         .attr("transform", function() {
-          return "scale(" + parseInt(d3.select(".timeScale").style("width"))/961 + ")";
+          return "scale(" + parseInt(d3.select(".timescale").style("width"))/961 + ")";
         });
 
       // var n keeps track of the transition
@@ -342,7 +342,7 @@ var timescale = (function() {
         .each(function(){ ++n; })
         .attr("x", function(d) { return x(d.x); })
         .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
-        .each("end", function() { if (!--n) { timeScale.labelTrans(d); }});
+        .each("end", function() { if (!--n) { timescale.labelTrans(d); }});
 
     },
 
@@ -358,26 +358,26 @@ var timescale = (function() {
       d3.selectAll(".fullName").transition()
         .duration(10)
         .each(function(){ ++n; })
-        .attr("x", function(d) { return timeScale.labelX(d); })
+        .attr("x", function(d) { return timescale.labelX(d); })
         .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); })
-        .each("end", function() { if (!--n) { timeScale.labelLevels(d); }});
+        .each("end", function() { if (!--n) { timescale.labelLevels(d); }});
 
       // Move the abbreviations
       d3.selectAll(".abbr").transition()
         .duration(300)
         .each(function(){ ++n; })
-        .attr("x", function(d) { return timeScale.labelAbbrX(d); })
+        .attr("x", function(d) { return timescale.labelAbbrX(d); })
         .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); })
         .each("end", function() { 
           if (!--n) {
-            timeScale.labelLevels(d);
+            timescale.labelLevels(d);
             d3.select("#l0").style("fill", "#fff");
           } else {
             d3.selectAll(".fullName").style("fill", "#333");
             d3.selectAll(".abbr").style("fill", "#333");
           }
         });
-      timeScale.resize();
+      timescale.resize();
     },
 
     // Highlight a given time interval
@@ -408,17 +408,17 @@ var timescale = (function() {
     },
 
     "resize": function() {
-      d3.select(".timeScale g")
+      d3.select(".timescale g")
         .attr("transform", function() {
-          return "scale(" + parseInt(d3.select(".timeScale").style("width"))/961 + ")";
+          return "scale(" + parseInt(d3.select(".timescale").style("width"))/961 + ")";
         });
 
-      d3.select(".timeScale svg")
+      d3.select(".timescale svg")
         .style("width", function() {
-          return d3.select(".timeScale").style("width");
+          return d3.select(".timescale").style("width");
          })
         .style("height", function() {
-          return parseInt(d3.select(".timeScale").style("width")) * 0.25 + "px";
+          return parseInt(d3.select(".timescale").style("width")) * 0.25 + "px";
         });
 
     },
