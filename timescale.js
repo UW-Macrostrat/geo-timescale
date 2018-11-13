@@ -1,9 +1,7 @@
 /*
 TODO
-
 FIX HASH, accesable from external
 Time ticks for level 4 periods when zoomed to level 3
-concurrent transitions
 */
 
 // Via http://stackoverflow.com/questions/14167863/how-can-i-bring-a-circle-to-the-front-with-d3
@@ -425,7 +423,7 @@ const timescale = (function() {
       d3.select(".timescale svg")
         .style("width", function() { return d3.select(".timescale").style("width"); })
         .style("height", function() { return parseInt(d3.select(".timescale").style("width")) * 0.25 + "px"; });
-    }
+    },
 
     /* Interval hash can be exposed publically so that the time scale data can be used 
        for other things, such as maps */
