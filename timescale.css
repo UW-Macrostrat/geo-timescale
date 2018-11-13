@@ -9,11 +9,8 @@ rect {
   stroke: #fff;
   stroke-width:1px;
 }
-.abbr {
-  display:none;
-}
 #l0 {
-  color:#fff;
+  fill:#fff !important;
 }
 line {
   stroke:#777;

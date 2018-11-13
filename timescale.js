@@ -1,3 +1,11 @@
+/*
+TODO
+
+FIX HASH, accesable from external
+Time ticks for level 4 periods when zoomed to level 3
+concurrent transitions
+*/
+
 // Via http://stackoverflow.com/questions/14167863/how-can-i-bring-a-circle-to-the-front-with-d3
 // Necessary for highlighting time intervals properly
 d3.selection.prototype.moveToFront = function() {
@@ -6,99 +14,127 @@ d3.selection.prototype.moveToFront = function() {
   });
 };
 
-var timescale = (function() {
-  var data = { oid: 0, col: "#000000", nam: "Geologic Time", children: [] },
-      interval_hash = { 0: data },
-      currentInterval,
-      dragStart, transformStart;
+// Via https://stackoverflow.com/questions/38224875/replacing-d3-transform-in-d3-v4
+function getTranslation(transform) {
+  // Create a dummy g for calculation purposes only. This will never
+  // be appended to the DOM and will be discarded once this function 
+  // returns.
+  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  
+  // Set the transform attribute to the provided string value.
+  g.setAttributeNS(null, "transform", transform);
+  
+  // consolidate the SVGTransformList containing all transformations
+  // to a single SVGTransform of type SVG_TRANSFORM_MATRIX and get
+  // its SVGMatrix. 
+  const matrix = g.transform.baseVal.consolidate().matrix;
+  
+  // As per definition values e and f are the ones for the translation.
+  return [matrix.e, matrix.f];
+}
+
+const timescale = (function() {
+
+  const width = 960;
+  const height = 130;
+
+  // Initialize data
+  const data = { oid: 0, nam: "Geologic Time", children: [] };
+  const interval_hash = { 0: data };
+  let currentInterval;
+  let dragStart;
+  let transformStart;
 
   return {
 
     "init": function(div) {
-      var w = 960,
-          h = 130,
-          x = d3.scale.linear().range([0, w - 5]),
-          y = d3.scale.linear().range([0, h]),
-          newX = 0.01;
+      let newX = 0.01;
 
-      var drag = d3.behavior.drag()
-        .origin(function() { 
-          var t = d3.select(".timescale g");
-          return {x: -newX, y: 0};
+      const drag = d3.drag()
+        .subject(function() { 
+          // const t = d3.select(".timescale g");
+          return {x: newX, y: 0};
         })
-        .on("dragstart", function() {
-          dragStart = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
-          transformStart = d3.transform(d3.select(".timescale").select("g").attr("transform")).translate;
+        .on("start", function() {
+        	dragStart = event.pageX;
+          transformStart = getTranslation(d3.select(".timescale").select("g").attr("transform"));
 
           d3.event.sourceEvent.stopPropagation();
         })
         .on("drag", function() {
-          var currentDrag = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
-          newX = (dragStart[0] - currentDrag[0]);
+        	currentDrag = event.pageX;
+
+         	newX = (dragStart - currentDrag);
 
           d3.select(".timescale").select("g")
             .attr("transform", function() {
-              return "translate(" + [ parseInt(transformStart[0] + -newX), 0 ] + ")scale(" + parseInt(d3.select(".timescale").style("width"))/961 + ")";
-            });
+              return `translate(${[ parseInt(transformStart[0] + -newX), 0 ]}) scale(${parseInt(d3.select(".timescale").style("width"))/961})`;
+            });        
         });
-
+      
       // Add class timescale to whatever div was supplied
       d3.select("#" + div).attr("class", "timescale");
 
       // Create the SVG for the chart
-      var time = d3.select("#" + div).append("svg:svg")
-          .attr("width", w)
-          .attr("height", h)
+      const time = d3.select("#" + div).append("svg")
+          .attr("width", width)
+          .attr("height", height)
           .append("g");
 
-      var scale = time.append("g")
+      // Move whole tick SVG group down 125px
+      const scale = time.append("g")
         .attr("id", "tickBar")
         .attr("transform", "translate(0,125)");
 
-      // Load the time scale data 
-      d3.json("intervals.json", function(error, result) {
+      // Create a new d3 partition layout
+      const partition = d3.partition()
+        .size([width, height])
+        .padding(0);
 
-        for(var i=0; i < result.records.length; i++) {
-          var r = result.records[i];
-          r.children = [];
-          r.pid = r.pid || 0;
-          r.abr = r.abr || r.nam.charAt(0);
-          r.mid = parseInt((r.eag + r.lag) / 2),
-          r.total = r.eag - r.lag;
-          interval_hash[r.oid] = r;
-          interval_hash[r.pid].children.push(r);
-        }
+      // Load the time scale data
+      d3.json("intervals.json").then(function(result) {
 
-          // Create a new d3 partition layout
-        var partition = d3.layout.partition()
-            .sort(function(d) { d3.ascending(d); })
-            .value(function(d) { return d.total; });
+        // Construct hierarchy into '' by oid's from paleoJSON
+        result.records.forEach(i => {
+          const result = i;
+          result.children = [];
+          result.pid = result.pid || 0; // Check if result is not a highest level period
+          result.abr = result.abr || result.nam.charAt(0);
+          result.mid = parseInt((result.eag + result.lag) / 2); //length of period
+          result.total = result.eag - result.lag;
+          interval_hash[result.oid] = result;
+          interval_hash[result.pid].children.push(result);
+        })
 
-        var rectGroup = time.append("g")
+        const root = d3.hierarchy(data)
+          .sum(d => (d.children.length === 0) ? d.total + 0.117 : 0 ); //? add time for Holocene
+
+        partition(root);
+
+        const rectGroup = time.append("g")
           .attr("id", "rectGroup");
+
         // Create the rectangles
         rectGroup.selectAll("rect")
-            .data(partition.nodes(data))
-          .enter().append("svg:rect")
-            .attr("x", function(d) { return x(d.x); })
-            .attr("y", function(d) { return y(d.y); })
-            .attr("width", function(d) { return x(d.dx); })
-            .attr("height", function(d) { return y(d.dy); })
-            .attr("fill", function(d) { return d.col || "#000000"; })
-            .attr("id", function(d) { return "t" + d.oid; })
+            .data( root.descendants() )
+          .enter().append("rect")
+            .attr("x", function(d) { return d.x0; })
+            .attr("y", function(d) { return d.y0; })
+            .attr("width", function(d) { return d.x1 - d.x0; })
+            .attr("height", function(d) { return d.y1 - d.y0; })
+            .attr("fill", function(d) { return d.data.col || "#000"; })
+            .attr("id", function(d) { return "t" + d.data.oid; })
             .style("opacity", 0.83)
             .call(drag)
-            .on("click", function(d) {
-              timescale.goTo(d);
-            });
+            .on("click", function(d) { timescale.goTo(d); });
 
         // Scale bar for the bottom of the graph
-        var scaleBar = scale.selectAll("rect")
-            .data(partition.nodes(data));
+        const scaleBar = scale.selectAll("rect")
+          .data(root.descendants());
 
-        var hash = scaleBar.enter().append("g")
-          .attr("class", function(d) {return "tickGroup s" + d.lvl})
-          .attr("transform", function(d) { return "translate(" + x(d.x) + ", 0)"});
+        const hash = scaleBar.enter().append("g")
+          .attr("class", function(d) { return "tickGroup s" + d.data.lvl})
+          .attr("transform", function(d) { return `translate(${d.x0}, 0)`}); 
 
         hash.append("line")
           .attr("x1", 0)
@@ -110,16 +146,16 @@ var timescale = (function() {
         hash.append("text")
           .attr("x", 0)
           .attr("y", 20)
-          .style("text-anchor", function(d) { return (d.eag == 0.0117) ? "end" : "middle"; })
+          .style("text-anchor", function(d) { return (d.data.eag !== 0.0117) ? "middle" : "end"; })
           .style("font-size", "0.65em")
-          .style("fill", "#777")
-          .text(function(d) {return d.eag});
+          .style("fill", "#000")
+          .text(function(d) { return d.data.eag; });
 
         // Create a tick for year 0
-        var now = scale.append("g")
-          .data([{x:1, y:0}])
+        const now = scale.append("g")
+          .data([{x0: width, y0: 0 }])
           .attr("class", "tickGroup s1 s2 s3 s4 s5")
-          .attr("transform","translate(955, 0)");
+          .attr("transform","translate(960, 0)");
 
         now.append("line")
           .attr("x1", 0)
@@ -132,275 +168,248 @@ var timescale = (function() {
           .attr("x", 0)
           .attr("y", 20)
           .attr("id", "now")
+          .style("fill", "white")
           .style("text-anchor", "end")
           .style("font-size", "0.65em")
           .style("fill", "#777")
-          .text("0");
+            .text("0");
 
-        var textGroup = time.append("g")
+        const textGroup = time.append("g")
           .attr("id", "textGroup");
 
         // Add the full labels
         textGroup.selectAll("fullName")
-            .data(partition.nodes(data))
-          .enter().append("svg:text")
-            .text(function(d) { return d.nam; })
+            .data( root.descendants() )
+          .enter().append("text")
+            .text(function(d) { return d.data.nam; })
             .attr("x", 1)
-            .attr("y", function(d) { return y(d.y) + 15;})
+            .attr("y", function(d) { return d.y0 + 15;})
             .attr("width", function() { return this.getComputedTextLength(); })
-            .attr("height", function(d) { return y(d.dy); })
-            .attr("class", function(d) { return "fullName level" + d.lvl; })
-            .attr("id", function(d) { return "l" + d.oid; })
+            .attr("height", function(d) { return d.y1 - d.y0; })
+            .attr("class", function(d) { return "fullName level" + d.data.lvl; })
+            .attr("id", function(d) { return "l" + d.data.oid; })
             .attr("x", function(d) { return timescale.labelX(d); })
-            .call(drag)
-            .on("click", function(d) {
-              timescale.goTo(d);
-            });
+            .on("click", function(d) { timescale.goTo(d); });
 
         // Add the abbreviations
         textGroup.selectAll("abbrevs")
-            .data(partition.nodes(data))
-          .enter().append("svg:text")
+            .data( root.descendants() )
+          .enter().append("text")
             .attr("x", 1)
-            .attr("y", function(d) { return y(d.y) + 15; })
+            .attr("y", function(d) { return d.y0 + 15; })
             .attr("width", 30)
-            .attr("height", function(d) { return y(d.dy); })
-            .text(function(d) { return d.abr || d.nam.charAt(0); })
-            .attr("class", function(d) { return "abbr level" + d.lvl; })
-            .attr("id", function(d) { return "a" + d.oid; })
+            .attr("height", function(d) { return d.y1 - d.y0; })
+            .text(function(d) { return d.data.abr; }) //charAt(0)
+            .attr("class", function(d) { return "abbr level" + d.data.lvl; })
+            .attr("id", function(d) { return "a" + d.data.oid; })
             .attr("x", function(d) { return timescale.labelAbbrX(d); })
-            .on("click", function(d) {
-              timescale.goTo(d);
-            });
+            .on("click", function(d) { timescale.goTo(d); });
 
         // Position the labels for the first time
-        timescale.goTo(interval_hash[0]);
+        timescale.goTo(root);
+        // console.log(root)
 
         // Remove the Geologic time abbreviation
         d3.select(".abbr.levelundefined").remove();
-
         // Open to Phanerozoic 
-        timescale.goTo(interval_hash[751]);
+        // timescale.goTo(root.children[2]);
 
       }); // End PaleoDB json callback
-
       //attach window resize listener to the window
       d3.select(window).on("resize", timescale.resize);
 
       // Size time scale to window
       timescale.resize();
-
     },
 
-    "labelLevels": function(d) {
-      // Center whichever interval was clicked
-      d3.select("#l" + d.oid).attr("x", 430);
-
-      // Position all the parent labels in the middle of the scale
-      if (typeof d.parent !== 'undefined') {
-        var depth = d.depth,
-            loc = "d.parent";
-        for (var i=0; i<depth;i++) {
-          var parent = eval(loc).nam;
-          d3.selectAll('.abbr').filter(function(d) {
-            return d.nam === parent;
-          }).attr("x", 430);
-          d3.selectAll('.fullName').filter(function(d) {
-            return d.nam === parent;
-          }).attr("x", 430);
-          loc += ".parent";
-        }
-        d3.selectAll('.abbr').filter(function(d) {
-          return d.nam === parent;
-        }).attr("x", 430);
-        d3.selectAll('.fullName').filter(function(d) {
-          return d.nam === parent;
-        }).attr("x", 430);
-      }
-    },
-
+    // Calculates x-position for label abbreviations
     "labelAbbrX": function(d) {
-      var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
-          rectX = parseFloat(d3.select("#t" + d.oid).attr("x"));
+      // const rectWidth = d.x1 - d.x0;
+      //     rectX = d.x0;
+      var rectWidth = parseFloat(d3.select("#t" + d.data.oid).attr("width")),
+          rectX = parseFloat(d3.select("#t" + d.data.oid).attr("x"));
 
-      var labelWidth;
-      // Doesn't work in every browser. Try to get the text length, if it fails use a default value
-      try {
-        labelWidth = d3.select("#a" + d.oid).node().getComputedTextLength();
-      } catch(err) {
-        labelWidth = 11;
-      }
+      let labelWidth = d3.select("#a" + d.data.oid).node().getComputedTextLength();
 
       if (rectWidth - 8 < labelWidth) {
-         d3.select("#a" + d.oid).style("display", "none");
+        d3.select("#a" + d.data.oid).style("display", "none");
       }
+
       return rectX + (rectWidth - labelWidth) / 2;
     },
-
+    
     "labelX": function(d) {
-      var rectWidth = parseFloat(d3.select("#t" + d.oid).attr("width")),
-          rectX = parseFloat(d3.select("#t" + d.oid).attr("x"));
+      const rectWidth = d.x1 - d.x0;
+            rectX = d.x0;
 
-      var labelWidth;
+      let labelWidth;
       try {
-        labelWidth = d3.select("#l" + d.oid).node().getComputedTextLength();
+        labelWidth = d3.select("#l" + d.data.oid).node().getComputedTextLength();
       } catch(err) {
         labelWidth = 25;
       }
 
-      if (rectWidth - 8 < labelWidth) {
-         d3.select("#l" + d.oid).style("display", "none");
+      // Hide full names if they are too small for their rectangles
+      if (rectWidth - 10 < labelWidth) {
+        d3.select("#l" + d.data.oid).style("display", "none");
       } else {
-        d3.select("#a" + d.oid).style("display", "none");
+        d3.select("#a" + d.data.oid).style("display", "none");
       }
 
       return rectX + (rectWidth - labelWidth) / 2;
-    },
-
-    "labelY": function(d) {
-      var rectHeight = parseFloat(d3.select("#t" + d.oid).attr("height")), 
-          rectY = parseFloat(d3.select("#t" + d.oid).attr("y")),
-          labelHeight = d3.select("#l" + d.oid).node().getBBox().height,
-          scale = parseInt(d3.select(".timescale").style("width"))/961;
-
-      return (rectY * 0.8) + ((rectHeight - labelHeight) / 2) + 8;
-    },
-
-    "labelAbbrY": function(d) {
-      var rectHeight = parseFloat(d3.select("#t" + d.oid).attr("height")), 
-          rectY = parseFloat(d3.select("#t" + d.oid).attr("y")),
-          labelHeight = d3.select("#l" + d.oid).node().getBBox().height,
-          scale = parseInt(d3.select(".timescale").style("width"))/961;
-
-      return (rectY * 0.8) + (rectHeight - labelHeight) / 2;
     },
 
     // Zooms the graph to a given time interval
     // Accepts a data point or a named interval
     "goTo": function(d) {
+      // console.group("goTo", d);
       if (typeof d == "string") {
-        var d = d3.selectAll('rect').filter(function(e) {
-          return e.nam === d;
-        });
+        let d = d3.selectAll('rect').filter(e => e.nam === d );
         d = d[0][0].__data__;
       } else if (d.children) {
-        if (d.children.length < 1) {
-          var d = d.parent;
-        }
+        // console.log("clicked node has children!")
+          if (d.children.length < 1) {
+            const d = d.data.parent;
+          }
       } else {
-        var d = d;
+        // console.log("clicked node has NO children!")
+        // let d = d;
       }
+      // console.groupEnd()
 
       // Stores the currently focused time interval for state restoration purposes
       timescale.currentInterval = d;
 
+      d3.selectAll(".fullName")
+      .style("display", "block");
+
+      d3.selectAll(".abbr")
+        .style("display", "block");
+      
       // Adjust the bottom scale
-      var depth = (d.depth != 'undefined') ? parseInt(d.depth) + 1 : 1;
+      const depth = (d.depth !== 'undefined') ? parseInt(d.depth) + 1 : 1;
       d3.selectAll(".scale").style("display", "none");
       d3.selectAll(".tickGroup").style("display", "none");
       d3.selectAll(".s" + depth).style("display", "block");
 
-      // Reset panning  
-      d3.select(".timescale g")
-        .attr("transform", function() {
-          return "scale(" + parseInt(d3.select(".timescale").style("width"))/961 + ")";
-        });
+      const x = d3.scaleLinear()
+        .range([5, width])
+        .domain([d.x0, d.x1]); 
 
-      // var n keeps track of the transition
-      var n = 0,
-          x = d3.scale.linear().range([5, 955]);
+      // Define transition for concurrent animation
+      const t = d3.transition()
+        .duration(300)
+        .ease(d3.easeLinear);
 
-      x.domain([d.x, d.x + d.dx]);
+      // Transition the rectangles
+      d3.selectAll("rect").transition(t)
+        .attr("x", function(d) { return x(d.x0); })
+        .attr("width", function(d) { return x(d.x1) - x(d.x0); })    
 
-      // "Hide" the labels during the transition
-      // Cannot calculate the correct position if display:none is used
-      d3.selectAll(".fullName")
-        .style("fill", "rgba(0,0,0,0)")
-        .style("display", "block");
-
-      d3.selectAll(".abbr")
-        .style("fill", "rgba(0,0,0,0)")
-        .style("display", "block");
-
-      d3.selectAll(".tickGroup").transition()
-        .duration(750)
+      // Transition tick groups
+      d3.selectAll(".tickGroup").transition(t)
         .attr("transform", function(d) {
           d3.select(this).selectAll("text").style("text-anchor", "middle");
-          if (x(d.x) == 5) {
+          if (x(d.x0) === 5) {
             d3.select(this).select("text")
               .style("text-anchor", "start");
-          } else if (x(d.x) == 955) {
+          } else if (d.x0 === width) {
             d3.select(this).select("text")
               .style("text-anchor", "end");
           }
-          return "translate(" + x(d.x) + ", 0)"; 
+          if (typeof x(d.x0) === 'number') {return `translate(${x(d.x0)}, 0)`}
         });
+        
+      // Move the full names, to keep animation concurrent labelX has to be calculated inside to goTo function
+      d3.selectAll(".fullName").transition(t)
+        .attr("x", function(d) { 
+            const rectWidth = x(d.x1) - x(d.x0),
+                  rectX = x(d.x0);
 
-      // When complete, calls labelTrans() 
-      d3.selectAll("rect").transition()
-        .duration(750)
-        .each(function(){ ++n; })
-        .attr("x", function(d) { return x(d.x); })
-        .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
-        .each("end", function() { if (!--n) { timescale.labelTrans(d); }});
+            let labelWidth;
+            try {
+              labelWidth = d3.select("#l" + d.data.oid).node().getComputedTextLength(); //this?
+            } catch(err) {
+              labelWidth = 25;
+            }
 
-    },
+            if (rectWidth - 8 < labelWidth) {
+              d3.select("#l" + d.data.oid).style("display", "none");
+           } else {
+             d3.select("#a" + d.data.oid).style("display", "none");
+           }
 
-    "labelTrans": function(d) {
-      // var n keeps track of the transition
-      var n = 0,
-          x = d3.scale.linear().range([0, 955]),
-          y = d3.scale.linear().range([0, 120]);
+            return rectX + (rectWidth - labelWidth) / 2;
+        })
+        .attr("height", function(d) { return d.y1 - d.y0; })
 
-      x.domain([d.x, d.x + d.dx]);
+      //Move the abbreviations
+      d3.selectAll(".abbr").transition(t)
+        .attr("x", function(d) {
+          const rectWidth = x(d.x1) - x(d.x0),
+                rectX = x(d.x0);
 
-      // Move the full names
-      d3.selectAll(".fullName").transition()
-        .duration(10)
-        .each(function(){ ++n; })
-        .attr("x", function(d) { return timescale.labelX(d); })
-        .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); })
-        .each("end", function() { if (!--n) { timescale.labelLevels(d); }});
-
-      // Move the abbreviations
-      d3.selectAll(".abbr").transition()
-        .duration(300)
-        .each(function(){ ++n; })
-        .attr("x", function(d) { return timescale.labelAbbrX(d); })
-        .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); })
-        .each("end", function() { 
-          if (!--n) {
-            timescale.labelLevels(d);
-            d3.select("#l0").style("fill", "#fff");
-          } else {
-            d3.selectAll(".fullName").style("fill", "#333");
-            d3.selectAll(".abbr").style("fill", "#333");
+          let abbrevWidth = d3.select("#a" + d.data.oid).node().getComputedTextLength();
+          
+          if (rectWidth - 8 < abbrevWidth) {
+            d3.select("#a" + d.data.oid).style("display", "none");
           }
+          
+          return rectX + (rectWidth - abbrevWidth) / 2;
+        })
+        .attr("height", function(d) { return d.y1 - d.y0; })
+        .on("end", function() { 
+          d3.selectAll(".fullName").style("fill", "#333");
+          d3.selectAll(".abbr").style("fill", "#333");
         });
+
+      // Center whichever interval was clicked
+      d3.select("#l" + d.data.oid).transition(t)
+        .attr("x", 430);
+
+      // Position all the parent labels in the middle of the scale
+      if (d.parent !== null) {
+        const depth = d.depth;
+        let loc = "d.parent";
+        for (let i=0; i < depth; i++) {
+          const parent = eval(loc).data.nam;
+          d3.selectAll('.abbr').filter(d => d.data.nam === parent ).transition(t)
+            .attr("x", 430);
+          d3.selectAll('.fullName').filter(d => d.data.nam === parent ).transition(t)
+            .attr("x", 430);
+          loc += ".parent";
+        }
+        d3.selectAll('.abbr').filter(d => d.data.nam === parent).transition(t)
+          .attr("x", 430);
+        d3.selectAll('.fullName').filter(d => d.data.nam === parent).transition(t)
+          .attr("x", 430);
+      }        
+
       timescale.resize();
     },
 
     // Highlight a given time interval
-    "highlight": function(d) {
-      d3.selectAll("rect").style("stroke", "#fff");
-      if (d.cxi) {
-        var id = d.cxi;
-        d3.selectAll("rect#t" + d.cxi).style("stroke", "#000").moveToFront();
-        d3.selectAll("#l" + d.cxi).moveToFront();
-      } else if (typeof d == "string") {
-        var id = d3.selectAll('rect').filter(function(e) {
-          return e.nam === d;
-        }).attr("id");
-        id = id.replace("t", "");
-      } else {
-        var id = d3.select(d).attr("id");
-        id = id.replace("p", "");
-      }
+    // "highlight": function(d) {
 
-      d3.selectAll("rect#t" + id).style("stroke", "#000").moveToFront();
-      d3.selectAll("#l" + id).moveToFront();
-      d3.selectAll(".abbr").moveToFront();
-    },
+    //   d3.selectAll("rect").style("stroke", "#fff");
+    //   if (d.cxi) {
+    //     let id = d.cxi;
+    //     d3.selectAll("rect#t" + d.cxi).style("stroke", "#000").moveToFront();
+    //     d3.selectAll("#l" + d.cxi).moveToFront();
+    //   } else if (typeof d == "string") {
+    //     let id = d3.selectAll('rect').filter(function(e) {
+    //       return e.nam === d;
+    //     }).attr("id");
+    //     id = id.replace("t", "");
+    //   } else {
+    //     let id = d3.select(d).attr("id");
+    //     id = id.replace("p", "");
+    //   }
+
+    //   d3.selectAll(`rect#t"${id}`).style("stroke", "#000").moveToFront();
+    //   d3.selectAll("#l" + id).moveToFront();
+    //   d3.selectAll(".abbr").moveToFront();
+    // },
 
     // Unhighlight a time interval by resetting the stroke of all rectangles
     "unhighlight": function() {
@@ -410,22 +419,18 @@ var timescale = (function() {
     "resize": function() {
       d3.select(".timescale g")
         .attr("transform", function() {
-          return "scale(" + parseInt(d3.select(".timescale").style("width"))/961 + ")";
+          return `scale(${parseInt(d3.select(".timescale").style("width"))/961})`;
         });
 
       d3.select(".timescale svg")
-        .style("width", function() {
-          return d3.select(".timescale").style("width");
-         })
-        .style("height", function() {
-          return parseInt(d3.select(".timescale").style("width")) * 0.25 + "px";
-        });
-
-    },
+        .style("width", function() { return d3.select(".timescale").style("width"); })
+        .style("height", function() { return parseInt(d3.select(".timescale").style("width")) * 0.25 + "px"; });
+    }
 
     /* Interval hash can be exposed publically so that the time scale data can be used 
        for other things, such as maps */
-    //"interval_hash": interval_hash,
+    // https://github.com/d3/d3-hierarchy/issues/58 
+    // "interval_hash": interval_hash, 
 
     // Method for getting the currently zoomed-to interval - useful for preserving states
     "currentInterval": currentInterval
