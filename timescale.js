@@ -12,26 +12,44 @@ d3.selection.prototype.moveToFront = function() {
   });
 };
 
-// Via https://stackoverflow.com/questions/38224875/replacing-d3-transform-in-d3-v4
-function getTranslation(transform) {
-  // Create a dummy g for calculation purposes only. This will never
-  // be appended to the DOM and will be discarded once this function 
-  // returns.
-  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  
-  // Set the transform attribute to the provided string value.
-  g.setAttributeNS(null, "transform", transform);
-  
-  // consolidate the SVGTransformList containing all transformations
-  // to a single SVGTransform of type SVG_TRANSFORM_MATRIX and get
-  // its SVGMatrix. 
-  const matrix = g.transform.baseVal.consolidate().matrix;
-  
-  // As per definition values e and f are the ones for the translation.
-  return [matrix.e, matrix.f];
-}
-
 const timescale = (function() {
+
+  // Via https://stackoverflow.com/questions/38224875/replacing-d3-transform-in-d3-v4
+  function getTranslation(transform) {
+    // Create a dummy g for calculation purposes only. This will never
+    // be appended to the DOM and will be discarded once this function 
+    // returns.
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    
+    // Set the transform attribute to the provided string value.
+    g.setAttributeNS(null, "transform", transform);
+    
+    // consolidate the SVGTransformList containing all transformations
+    // to a single SVGTransform of type SVG_TRANSFORM_MATRIX and get
+    // its SVGMatrix. 
+    const matrix = g.transform.baseVal.consolidate().matrix;
+    
+    // As per definition values e and f are the ones for the translation.
+    return [matrix.e, matrix.f];
+  }
+
+  // Via https://stackoverflow.com/questions/9133500/how-to-find-a-node-in-a-tree-with-javascript
+  function searchTree(node, property, match){
+    if (property === "nam" || "oid" || "mid" || "lag" || "") {
+      if (node.data[property] == match){
+        return node;
+      } else if (node.children != null){
+          let result = null;
+          for (let i=0; result == null && i < node.children.length; i++) {
+            result = searchTree(node.children[i], property, match);
+          }
+          return result;
+      }
+      return null;
+    } else {
+      console.warn("Property can't be used to search")
+    }
+  }
 
   const width = 960;
   const height = 130;
@@ -40,6 +58,7 @@ const timescale = (function() {
   const data = { oid: 0, nam: "Geologic Time", children: [] };
   const interval_hash = { 0: data };
   let currentInterval;
+  let root;
   let dragStart;
   let transformStart;
 
@@ -92,20 +111,26 @@ const timescale = (function() {
       // Load the time scale data
       d3.json("intervals.json").then(function(result) {
 
-        // Construct hierarchy into '' by oid's from paleoJSON
+        // Construct hierarchy variable 'data' by oid's from paleoJSON
         result.records.forEach(i => {
-          const result = i;
-          result.children = [];
-          result.pid = result.pid || 0; // Check if result is not a highest level period
-          result.abr = result.abr || result.nam.charAt(0);
-          result.mid = parseInt((result.eag + result.lag) / 2); //length of period
-          result.total = result.eag - result.lag;
-          interval_hash[result.oid] = result;
-          interval_hash[result.pid].children.push(result);
+          i.children = [];
+          i.pid = i.pid || 0; // Check if i is not a highest level period
+          i.abr = i.abr || i.nam.charAt(0);
+          i.mid = parseInt((i.eag + i.lag) / 2); //length of period
+          i.total = i.eag - i.lag;
+          interval_hash[i.oid] = i;
+          interval_hash[i.pid].children.push(i);
         })
-
-        const root = d3.hierarchy(data)
+        
+        root = d3.hierarchy(data)
           .sum(d => (d.children.length === 0) ? d.total + 0.117 : 0 ); //? add time for Holocene
+
+        console.log(
+          {result}, 
+          {interval_hash},
+          {data},   // created hierarchy
+          {root}  // d3 hierarchy with Node types
+          )
 
         partition(root);
 
@@ -124,7 +149,7 @@ const timescale = (function() {
             .attr("id", function(d) { return "t" + d.data.oid; })
             .style("opacity", 0.83)
             .call(drag)
-            .on("click", function(d) { timescale.goTo(d); });
+            .on("click", function(d) { console.log(d); timescale.goTo(d); });
 
         // Scale bar for the bottom of the graph
         const scaleBar = scale.selectAll("rect")
@@ -201,17 +226,16 @@ const timescale = (function() {
             .attr("class", function(d) { return "abbr level" + d.data.lvl; })
             .attr("id", function(d) { return "a" + d.data.oid; })
             .attr("x", function(d) { return timescale.labelAbbrX(d); })
-            .on("click", function(d) { timescale.goTo(d); });
+            .on("click", function(d) { console.log(d); timescale.goTo(d); });
 
         // Position the labels for the first time
         timescale.goTo(root);
-        // console.log(root)
 
         // Remove the Geologic time abbreviation
         d3.select(".abbr.levelundefined").remove();
+        
         // Open to Phanerozoic 
-        // timescale.goTo(root.children[2]);
-
+        timescale.goTo("Phanerozoic");
       }); // End PaleoDB json callback
       //attach window resize listener to the window
       d3.select(window).on("resize", timescale.resize);
@@ -222,8 +246,6 @@ const timescale = (function() {
 
     // Calculates x-position for label abbreviations
     "labelAbbrX": function(d) {
-      // const rectWidth = d.x1 - d.x0;
-      //     rectX = d.x0;
       var rectWidth = parseFloat(d3.select("#t" + d.data.oid).attr("width")),
           rectX = parseFloat(d3.select("#t" + d.data.oid).attr("x"));
 
@@ -262,16 +284,13 @@ const timescale = (function() {
     "goTo": function(d) {
       // console.group("goTo", d);
       if (typeof d == "string") {
-        let d = d3.selectAll('rect').filter(e => e.nam === d );
-        d = d[0][0].__data__;
+        console.log("goto is a a string")
+        d = searchTree(root, "nam", d)
       } else if (d.children) {
         // console.log("clicked node has children!")
           if (d.children.length < 1) {
             const d = d.data.parent;
           }
-      } else {
-        // console.log("clicked node has NO children!")
-        // let d = d;
       }
       // console.groupEnd()
 
@@ -363,7 +382,7 @@ const timescale = (function() {
 
       // Center whichever interval was clicked
       d3.select("#l" + d.data.oid).transition(t)
-        .attr("x", 430);
+        .attr("x", width/2);
 
       // Position all the parent labels in the middle of the scale
       if (d.parent !== null) {
@@ -372,42 +391,42 @@ const timescale = (function() {
         for (let i=0; i < depth; i++) {
           const parent = eval(loc).data.nam;
           d3.selectAll('.abbr').filter(d => d.data.nam === parent ).transition(t)
-            .attr("x", 430);
+            .attr("x", width/2);
           d3.selectAll('.fullName').filter(d => d.data.nam === parent ).transition(t)
-            .attr("x", 430);
+            .attr("x", width/2);
           loc += ".parent";
         }
         d3.selectAll('.abbr').filter(d => d.data.nam === parent).transition(t)
-          .attr("x", 430);
+          .attr("x", width/2);
         d3.selectAll('.fullName').filter(d => d.data.nam === parent).transition(t)
-          .attr("x", 430);
+          .attr("x", width/2);
       }        
 
       timescale.resize();
     },
 
     // Highlight a given time interval
-    // "highlight": function(d) {
+    "highlight": function(d) {
 
-    //   d3.selectAll("rect").style("stroke", "#fff");
-    //   if (d.cxi) {
-    //     let id = d.cxi;
-    //     d3.selectAll("rect#t" + d.cxi).style("stroke", "#000").moveToFront();
-    //     d3.selectAll("#l" + d.cxi).moveToFront();
-    //   } else if (typeof d == "string") {
-    //     let id = d3.selectAll('rect').filter(function(e) {
-    //       return e.nam === d;
-    //     }).attr("id");
-    //     id = id.replace("t", "");
-    //   } else {
-    //     let id = d3.select(d).attr("id");
-    //     id = id.replace("p", "");
-    //   }
+      d3.selectAll("rect").style("stroke", "#fff");
+      if (d.cxi) {
+        let id = d.cxi;
+        d3.selectAll("rect#t" + d.cxi).style("stroke", "#000").moveToFront();
+        d3.selectAll("#l" + d.cxi).moveToFront();
+      } else if (typeof d == "string") {
+        let id = d3.selectAll('rect').filter(function(e) {
+          return e.nam === d;
+        }).attr("id");
+        id = id.replace("t", "");
+      } else {
+        let id = d3.select(d).attr("id");
+        id = id.replace("p", "");
+      }
 
-    //   d3.selectAll(`rect#t"${id}`).style("stroke", "#000").moveToFront();
-    //   d3.selectAll("#l" + id).moveToFront();
-    //   d3.selectAll(".abbr").moveToFront();
-    // },
+      d3.selectAll(`rect#t${id}`).style("stroke", "#000").moveToFront();
+      d3.selectAll("#l" + id).moveToFront();
+      d3.selectAll(".abbr").moveToFront();
+    },
 
     // Unhighlight a time interval by resetting the stroke of all rectangles
     "unhighlight": function() {
@@ -428,7 +447,7 @@ const timescale = (function() {
     /* Interval hash can be exposed publically so that the time scale data can be used 
        for other things, such as maps */
     // https://github.com/d3/d3-hierarchy/issues/58 
-    // "interval_hash": interval_hash, 
+    "interval_hash": interval_hash, 
 
     // Method for getting the currently zoomed-to interval - useful for preserving states
     "currentInterval": currentInterval
