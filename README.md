@@ -1,11 +1,13 @@
-geo-timescale
-=============
+# geo-timescale
 
-A modular D3.js-based geologic time scale that utilizes data from the [Paleobiology Database](http://paleobiodb.org).
+A modular D3.js-based geologic time scale that utilizes data from the [Paleobiology Database](http://paleobiodb.org). A live demo can be found at [Observable](https://observablehq.com/@julesblm/geological-time-scale-2021).
 
-To use, simply include ````timescale.js```` and ````timescale.css```` in your HTML document, and initialize into the div of your choice with ````timescale.init("id-of-div")````.
+```js
+import { geoTimescale } from "geotimescale";
 
-A live demo can be found at [http://bl.ocks.org/jczaplew/7546689](http://bl.ocks.org/jczaplew/7546689).
+geoTimescale("#timescale-container");
+```
 
-### Funding
-Development supported by NSF EAR-0949416.
+## Funding
+
+Development of first version supported by NSF EAR-0949416.

@@ -1,0 +1,30 @@
+{
+  "name": "geotimescale",
+  "version": "1.0.0",
+  "description": "Interactive ICS geological timescale",
+  "type": "module",
+  "source": "src/index.js",
+  "exports": "./dist/index.modern.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init": "eslint --init"
+  },
+  "author": "Jules Blom",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^7.32.0"
+
+  },
+  "devDependencies": {
+    "d3-hierarchy": "^3.0.1",
+    "d3-selection": "^3.0.0",
+    "d3-transition": "^3.0.1",
+    "d3-zoom": "^3.0.0",    
+    "microbundle": "^0.13.3"
+  }
+}
