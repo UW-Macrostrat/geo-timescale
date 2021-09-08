@@ -4,14 +4,16 @@ import { select } from "d3-selection";
 import { partition, stratify } from "d3-hierarchy";
 import intervals from "./intervals.json";
 
-const margins = { bottom: 60 }; // 5 * tickLength and then some
+
 const defaultConfig = {
   width: 960,
-  height: 380,
+  height: 400,
   tickLength: 10,
   neighborWidth: 25,
   fontSize: 12,
 };
+
+const margins = { bottom: 65 }; 
 
 const labelVisible = (d) => +(d.x1 - d.x0 > 14);
 
@@ -33,7 +35,7 @@ export function geoTimescale(parentSelector, config = defaultConfig) {
 
   const svg = select(parentSelector)
     .append("svg")
-    .attr("viewBox", [0, 0, width, height + tickLength * 2]) //hacky fix should
+    .attr("viewBox", [0, 0, width, height])
     .style("font", font);
 
   const g = svg.append("g").attr("cursor", "grab");
@@ -52,12 +54,10 @@ export function geoTimescale(parentSelector, config = defaultConfig) {
   );
 
   let focus = root;
-  geoTimescale.focus = focus;
 
-  // Observable code
-  // Make this into a view, so that the currently hovered sequence is available to the breadcrumb
-  // const element = svg.node();
-  // element.value = { sequence: [] };
+  // Expose focus and ancestors
+  geoTimescale.focus = focus;
+  geoTimescale.sequence = [];
 
   let hideSmallTicks = true;
 
@@ -82,20 +82,14 @@ export function geoTimescale(parentSelector, config = defaultConfig) {
       const sequence = d.ancestors().reverse();
       // Highlight the ancestors
       cell.attr("fill-opacity", (d) => (sequence.includes(d) ? 1.0 : 0.5));
-      // Update the value of this view with the currently hovered sequence and percentage
-      // observable code
-      // element.value = { sequence };
-      // element.dispatchEvent(new CustomEvent("input"));
+
+      geoTimescale.sequence = sequence;
     })
     .on("click", clicked);
 
   svg.on("pointerleave", () => {
     cell.attr("fill-opacity", 1);
-    // Update the value of this view
-    // observable code
-
-    // element.value = { sequence: "" };
-    // element.dispatchEvent(new CustomEvent("input"));
+    geoTimescale.sequence = [];
   });
 
   cell.append("title").text((d) => {
@@ -135,12 +129,6 @@ export function geoTimescale(parentSelector, config = defaultConfig) {
     .attr("transform", `translate(0,${height - margins.bottom})`); // Move tick group down
 
   ticksGroup.call((g) => ticks(g, makeTicksData(root), hideSmallTicks));
-
-  // if (validSelection) {
-  //   const matchNode = root.find((d) => d.data.name === selectedInterval);
-
-  //   clicked(null, matchNode);
-  // }
 
   function clicked(event, p) {
     focus = focus === p ? (p = p.parent) : p;
@@ -257,13 +245,13 @@ export function geoTimescale(parentSelector, config = defaultConfig) {
             .attr("x1", 0)
             .attr("y1", 2)
             .attr("x2", 0)
-            .attr("y2", (d) => margins.bottom - d.depth * tickLength);
+            .attr("y2", (d) => margins.bottom - d.depth * tickLength - fontSize );
 
           tick
             .append("text")
             .attr("x", 0)
-            .attr("y", (d) => margins.bottom - d.depth * tickLength + 4)
-            .attr("dominant-baseline", "hanging")
+            .attr("y", (d) => margins.bottom - d.depth * tickLength - fontSize/2)
+            .attr("dominant-baseline", "middle")
             .attr("font-size", (d) => `${1 - 0.05 * d.depth}em`)
             .text((d) => d.text)
             .clone(true)
