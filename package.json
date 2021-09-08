@@ -1,6 +1,6 @@
 {
-  "name": "geotimescale",
-  "version": "1.0.0",
+  "name": "@macrostrat/d3-timescale",
+  "version": "2.0.0",
   "description": "Interactive ICS geological timescale",
   "type": "module",
   "source": "src/index.js",
