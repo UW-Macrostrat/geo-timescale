@@ -5,6 +5,8 @@ A modular D3.js-based geologic time scale that utilizes data from the [Paleobiol
 
 To use, simply include ````timescale.js```` and ````timescale.css```` in your HTML document, and initialize into the div of your choice with ````timescale.init("id-of-div")````.
 
+The package is published at NPM at `@macrostrat/d3-timescale`.
+
 A live demo can be found at [http://bl.ocks.org/jczaplew/7546689](http://bl.ocks.org/jczaplew/7546689).
 
 ### Funding

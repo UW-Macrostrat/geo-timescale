@@ -1,0 +1,26 @@
+{
+  "name": "@macrostrat/d3-timescale",
+  "version": "1.0.0",
+  "description": "Macrostrat's geologic timescale using the ICS divisions.",
+  "main": "timescale.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UW-Macrostrat/geo-timescale.git"
+  },
+  "authors": [
+    "John Czaplewski",
+    "Shanan Peters",
+    "Daven Quinn"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UW-Macrostrat/geo-timescale/issues"
+  },
+  "homepage": "https://github.com/UW-Macrostrat/geo-timescale#readme",
+  "dependencies": {
+    "d3": "^3.5.17"
+  }
+}
