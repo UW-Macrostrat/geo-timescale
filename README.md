@@ -26,12 +26,11 @@ If any of these properties is not present, a default value will be used.
 
 ## Installing
 
-The package is published at NPM at `@macrostrat/d3-timescale`.
+The package is published at NPM at [`@macrostrat/d3-timescale`](https://www.npmjs.com/package/@macrostrat/d3-timescale).
 
 ```bash
 npm install @macrostrat/d3-timescale
 ```
-
 
 ## Funding
 
