@@ -4,8 +4,7 @@ import { select } from "d3-selection";
 import { partition, stratify } from "d3-hierarchy";
 import intervals from "./intervals.json";
 
-
-const defaultConfig = {
+const defaults = {
   width: 960,
   height: 400,
   tickLength: 10,
@@ -13,7 +12,7 @@ const defaultConfig = {
   fontSize: 12,
 };
 
-const margins = { bottom: 65 }; 
+const margins = { bottom: 65 };
 
 const labelVisible = (d) => +(d.x1 - d.x0 > 14);
 
@@ -21,8 +20,14 @@ const hierarchicalData = stratify()(intervals).sum((d) =>
   d.leaf ? d.start - d.end : 0
 );
 
-export function geoTimescale(parentSelector, config = defaultConfig) {
-  const { tickLength, width, height, neighborWidth, fontSize } = config;
+export function geoTimescale(parentSelector, config = {}) {
+  const {
+    tickLength = defaults.tickLength,
+    width = defaults.width,
+    height = defaults.height,
+    neighborWidth = defaults.neighborWidth,
+    fontSize = defaults.fontSize,
+  } = config;
   const font = `${fontSize}px sans-serif`;
 
   // Create a new d3 partition layout
@@ -131,7 +136,7 @@ export function geoTimescale(parentSelector, config = defaultConfig) {
   ticksGroup.call((g) => ticks(g, makeTicksData(root), hideSmallTicks));
 
   function clicked(event, p) {
-    focus = focus === p ? (p = p.parent) : p;
+    focus = p === focus ? p.parent : p;
     geoTimescale.focus = focus;
     hideSmallTicks = [0, 1].includes(focus.depth);
 
@@ -144,21 +149,21 @@ export function geoTimescale(parentSelector, config = defaultConfig) {
       focus.data.start === root.data.start ? 0 : neighborWidth;
     const rightNeighbor = focus.data.end === root.data.end ? 0 : neighborWidth;
 
-    root.each(
-      (d) =>
-        (d.target = {
-          x0:
-            leftNeighbor +
-            ((d.x0 - p.x0) / (p.x1 - p.x0)) *
-              (width - rightNeighbor - leftNeighbor),
-          x1:
-            leftNeighbor +
-            ((d.x1 - p.x0) / (p.x1 - p.x0)) *
-              (width - rightNeighbor - leftNeighbor),
-          y0: d.y0,
-          y1: d.y1,
-        })
-    );
+    root.each((d) => {
+      const widthMinusNeighbors = width - rightNeighbor - leftNeighbor;
+      const focusWidth = focus.x1 - focus.x0; // partition width of focused node
+
+      const target = {
+        x0:
+          leftNeighbor + ((d.x0 - focus.x0) / focusWidth) * widthMinusNeighbors,
+        x1:
+          leftNeighbor + ((d.x1 - focus.x0) / focusWidth) * widthMinusNeighbors,
+        y0: d.y0,
+        y1: d.y1,
+      };
+
+      d.target = target;
+    });
 
     // Reset drag
     g.transition(t).attr("transform", "translate(0,0)");
@@ -245,12 +250,18 @@ export function geoTimescale(parentSelector, config = defaultConfig) {
             .attr("x1", 0)
             .attr("y1", 2)
             .attr("x2", 0)
-            .attr("y2", (d) => margins.bottom - d.depth * tickLength - fontSize );
+            .attr(
+              "y2",
+              (d) => margins.bottom - d.depth * tickLength - fontSize
+            );
 
           tick
             .append("text")
             .attr("x", 0)
-            .attr("y", (d) => margins.bottom - d.depth * tickLength - fontSize/2)
+            .attr(
+              "y",
+              (d) => margins.bottom - d.depth * tickLength - fontSize / 2
+            )
             .attr("dominant-baseline", "middle")
             .attr("font-size", (d) => `${1 - 0.05 * d.depth}em`)
             .text((d) => d.text)
