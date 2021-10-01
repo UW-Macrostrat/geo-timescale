@@ -43,20 +43,7 @@ export function geoTimescale(parentSelector, config = {}) {
     .attr("viewBox", [0, 0, width, height])
     .style("font", font);
 
-  const g = svg.append("g").attr("cursor", "grab");
-
-  svg.call(
-    zoom()
-      .extent([
-        [0, 0],
-        [width, height],
-      ])
-      .scaleExtent([1, 8])
-      .on("zoom", zoomed)
-      .on("end", () => {
-        g.attr("cursor", "grab");
-      })
-  );
+  const g = svg.append("g");
 
   let focus = root;
 
@@ -213,6 +200,19 @@ export function geoTimescale(parentSelector, config = {}) {
     ticksGroup.call((g) => ticks(g, makeTicksData(root), hideSmallTicks, t));
   }
 
+  svg.call(
+    zoom()
+      .extent([
+        [0, 0],
+        [width, height],
+      ])
+      .scaleExtent([1, 8])
+      .on("zoom", zoomed)
+      .on("end", () => {
+        rect.attr("cursor", "pointer");
+      })
+  );
+
   function zoomed(e) {
     if (!root.target) return;
 
@@ -224,7 +224,7 @@ export function geoTimescale(parentSelector, config = {}) {
     )
       return;
 
-    g.attr("cursor", "grabbing");
+    rect.attr("cursor", "grabbing");
     g.attr("transform", `translate(${translateX},0)`);
   }
 
