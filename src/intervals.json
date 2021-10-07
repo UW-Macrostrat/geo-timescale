@@ -1,0 +1,1703 @@
+[
+    {
+        "id": 0,
+        "name": "Geologic Time",
+        "textColor": "white",
+        "color": "#000",
+        "end": 0,
+        "start": 4000
+    },
+    {
+        "id": 753,
+        "name": "Archean",
+        "level": 1,
+        "parentId": 0,
+        "color": "#F0047F",
+        "end": 2500,
+        "start": 4000
+    },
+    {
+        "id": 752,
+        "name": "Proterozoic",
+        "level": 1,
+        "parentId": 0,
+        "color": "#F73563",
+        "end": 541,
+        "start": 2500
+    },
+    {
+        "id": 751,
+        "name": "Phanerozoic",
+        "level": 1,
+        "parentId": 0,
+        "color": "#9AD9DD",
+        "end": 0,
+        "start": 541
+    },
+    {
+        "id": 760,
+        "name": "Eoarchean",
+        "level": 2,
+        "leaf": true,
+        "parentId": 753,
+        "color": "#DA037F",
+        "end": 3600,
+        "start": 4000
+    },
+    {
+        "id": 759,
+        "name": "Paleoarchean",
+        "level": 2,
+        "leaf": true,
+        "parentId": 753,
+        "color": "#F444A9",
+        "end": 3200,
+        "start": 3600
+    },
+    {
+        "id": 758,
+        "name": "Mesoarchean",
+        "level": 2,
+        "leaf": true,
+        "parentId": 753,
+        "color": "#F768A9",
+        "end": 2800,
+        "start": 3200
+    },
+    {
+        "id": 757,
+        "name": "Neoarchean",
+        "level": 2,
+        "leaf": true,
+        "parentId": 753,
+        "color": "#F99BC1",
+        "end": 2500,
+        "start": 2800
+    },
+    {
+        "id": 756,
+        "name": "Paleoproterozoic",
+        "level": 2,
+        "parentId": 752,
+        "color": "#F74370",
+        "end": 1600,
+        "start": 2500
+    },
+    {
+        "id": 755,
+        "name": "Mesoproterozoic",
+        "level": 2,
+        "parentId": 752,
+        "color": "#FDB462",
+        "end": 1000,
+        "start": 1600
+    },
+    {
+        "id": 754,
+        "name": "Neoproterozoic",
+        "level": 2,
+        "parentId": 752,
+        "color": "#FEB342",
+        "end": 541,
+        "start": 1000
+    },
+    {
+        "id": 3,
+        "name": "Paleozoic",
+        "abbr": "Pz",
+        "level": 2,
+        "parentId": 751,
+        "color": "#99C08D",
+        "end": 252.2,
+        "start": 541
+    },
+    {
+        "id": 2,
+        "name": "Mesozoic",
+        "abbr": "Mz",
+        "level": 2,
+        "parentId": 751,
+        "color": "#67C5CA",
+        "end": 66,
+        "start": 252.2
+    },
+    {
+        "id": 1,
+        "name": "Cenozoic",
+        "abbr": "Cz",
+        "level": 2,
+        "parentId": 751,
+        "color": "#F2F91D",
+        "end": 0,
+        "start": 66
+    },
+    {
+        "id": 770,
+        "name": "Siderian",
+        "level": 3,
+        "leaf": true,
+        "parentId": 756,
+        "color": "#F74F7C",
+        "end": 2300,
+        "start": 2500
+    },
+    {
+        "id": 769,
+        "name": "Rhyacian",
+        "level": 3,
+        "leaf": true,
+        "parentId": 756,
+        "color": "#F75B89",
+        "end": 2050,
+        "start": 2300
+    },
+    {
+        "id": 768,
+        "name": "Orosirian",
+        "level": 3,
+        "leaf": true,
+        "parentId": 756,
+        "color": "#F76898",
+        "end": 1800,
+        "start": 2050
+    },
+    {
+        "id": 767,
+        "name": "Statherian",
+        "level": 3,
+        "leaf": true,
+        "parentId": 756,
+        "color": "#F875A7",
+        "end": 1600,
+        "start": 1800
+    },
+    {
+        "id": 766,
+        "name": "Calymmian",
+        "level": 3,
+        "leaf": true,
+        "parentId": 755,
+        "color": "#FDC07A",
+        "end": 1400,
+        "start": 1600
+    },
+    {
+        "id": 765,
+        "name": "Ectasian",
+        "level": 3,
+        "leaf": true,
+        "parentId": 755,
+        "color": "#F3CC8A",
+        "end": 1200,
+        "start": 1400
+    },
+    {
+        "id": 764,
+        "name": "Stenian",
+        "level": 3,
+        "leaf": true,
+        "parentId": 755,
+        "color": "#FED99A",
+        "end": 1000,
+        "start": 1200
+    },
+    {
+        "id": 763,
+        "name": "Tonian",
+        "level": 3,
+        "leaf": true,
+        "parentId": 754,
+        "color": "#FEBF4E",
+        "end": 850,
+        "start": 1000
+    },
+    {
+        "id": 762,
+        "name": "Cryogenian",
+        "level": 3,
+        "leaf": true,
+        "parentId": 754,
+        "color": "#FECC5C",
+        "end": 635,
+        "start": 850
+    },
+    {
+        "id": 761,
+        "name": "Ediacaran",
+        "level": 3,
+        "leaf": true,
+        "parentId": 754,
+        "color": "#FED96A",
+        "end": 541,
+        "start": 635
+    },
+    {
+        "id": 22,
+        "name": "Cambrian",
+        "abbr": "Cm",
+        "level": 3,
+        "parentId": 3,
+        "textColor": "white",
+        "color": "#7FA056",
+        "end": 485.4,
+        "start": 541
+    },
+    {
+        "id": 21,
+        "name": "Ordovician",
+        "abbr": "O",
+        "level": 3,
+        "parentId": 3,
+        "textColor": "white",
+        "color": "#009270",
+        "end": 443.4,
+        "start": 485.4
+    },
+    {
+        "id": 20,
+        "name": "Silurian",
+        "abbr": "S",
+        "level": 3,
+        "parentId": 3,
+        "color": "#B3E1B6",
+        "end": 419.2,
+        "start": 443.4
+    },
+    {
+        "id": 19,
+        "name": "Devonian",
+        "abbr": "D",
+        "level": 3,
+        "parentId": 3,
+        "color": "#CB8C37",
+        "end": 358.9,
+        "start": 419.2
+    },
+    {
+        "id": 18,
+        "name": "Carboniferous",
+        "abbr": "C",
+        "level": 3,
+        "parentId": 3,
+        "textColor": "white",
+        "color": "#67A599",
+        "end": 298.9,
+        "start": 358.9
+    },
+    {
+        "id": 17,
+        "name": "Permian",
+        "abbr": "P",
+        "level": 3,
+        "parentId": 3,
+        "color": "#F04028",
+        "end": 252.2,
+        "start": 298.9
+    },
+    {
+        "id": 16,
+        "name": "Triassic",
+        "abbr": "Tr",
+        "level": 3,
+        "parentId": 2,
+        "textColor": "white",
+        "color": "#812B92",
+        "end": 201.3,
+        "start": 252.2
+    },
+    {
+        "id": 15,
+        "name": "Jurassic",
+        "abbr": "J",
+        "level": 3,
+        "parentId": 2,
+        "textColor": "white",
+        "color": "#34B2C9",
+        "end": 145,
+        "start": 201.3
+    },
+    {
+        "id": 14,
+        "name": "Cretaceous",
+        "abbr": "K",
+        "level": 3,
+        "parentId": 2,
+        "color": "#7FC64E",
+        "end": 66,
+        "start": 145
+    },
+    {
+        "id": 26,
+        "name": "Paleogene",
+        "abbr": "Pg",
+        "level": 3,
+        "parentId": 1,
+        "color": "#FD9A52",
+        "end": 23.03,
+        "start": 66
+    },
+    {
+        "id": 25,
+        "name": "Neogene",
+        "abbr": "Ng",
+        "level": 3,
+        "parentId": 1,
+        "color": "#FFE619",
+        "end": 2.588,
+        "start": 23.03
+    },
+    {
+        "id": 12,
+        "name": "Quaternary",
+        "level": 3,
+        "parentId": 1,
+        "color": "#F9F97F",
+        "end": 0,
+        "start": 2.588
+    },
+    {
+        "id": 1111,
+        "name": "Terreneuvian",
+        "level": 4,
+        "parentId": 22,
+        "color": "#8CB06C",
+        "end": 521,
+        "start": 541
+    },
+    {
+        "id": 1110,
+        "name": "Series 2",
+        "level": 4,
+        "parentId": 22,
+        "color": "#99C078",
+        "end": 509,
+        "start": 521
+    },
+    {
+        "id": 1109,
+        "name": "Series 3",
+        "level": 4,
+        "parentId": 22,
+        "color": "#A6CF86",
+        "end": 497,
+        "start": 509
+    },
+    {
+        "id": 780,
+        "name": "Furongian",
+        "level": 4,
+        "parentId": 22,
+        "color": "#B3E095",
+        "end": 485.4,
+        "start": 497
+    },
+    {
+        "id": 31,
+        "name": "Early Ordovician",
+        "level": 4,
+        "parentId": 21,
+        "textColor": "white",
+        "color": "#1A9D6F",
+        "end": 470,
+        "start": 485.4
+    },
+    {
+        "id": 30,
+        "name": "Middle Ordovician",
+        "level": 4,
+        "parentId": 21,
+        "textColor": "white",
+        "color": "#4DB47E",
+        "end": 458.4,
+        "start": 470
+    },
+    {
+        "id": 29,
+        "name": "Late Ordovician",
+        "level": 4,
+        "parentId": 21,
+        "color": "#7FCA93",
+        "end": 443.4,
+        "start": 458.4
+    },
+    {
+        "id": 62,
+        "name": "Llandovery",
+        "level": 4,
+        "parentId": 20,
+        "color": "#99D7B3",
+        "end": 433.4,
+        "start": 443.4
+    },
+    {
+        "id": 61,
+        "name": "Wenlock",
+        "level": 4,
+        "parentId": 20,
+        "color": "#B3E1C2",
+        "end": 427.4,
+        "start": 433.4
+    },
+    {
+        "id": 60,
+        "name": "Ludlow",
+        "level": 4,
+        "parentId": 20,
+        "color": "#BFE6CF",
+        "end": 423,
+        "start": 427.4
+    },
+    {
+        "id": 59,
+        "name": "Pridoli",
+        "level": 4,
+        "parentId": 20,
+        "color": "#E6F5E1",
+        "end": 419.2,
+        "start": 423
+    },
+    {
+        "id": 58,
+        "name": "Early Devonian",
+        "level": 4,
+        "parentId": 19,
+        "color": "#E5AC4D",
+        "end": 393.3,
+        "start": 419.2
+    },
+    {
+        "id": 57,
+        "name": "Middle Devonian",
+        "level": 4,
+        "parentId": 19,
+        "color": "#F1C868",
+        "end": 382.7,
+        "start": 393.3
+    },
+    {
+        "id": 56,
+        "name": "Late Devonian",
+        "level": 4,
+        "parentId": 19,
+        "color": "#F1E19D",
+        "end": 358.9,
+        "start": 382.7
+    },
+    {
+        "id": 28,
+        "name": "Mississippian",
+        "level": 4,
+        "parentId": 18,
+        "textColor": "white",
+        "color": "#678F66",
+        "end": 323.2,
+        "start": 358.9
+    },
+    {
+        "id": 27,
+        "name": "Pennsylvanian",
+        "level": 4,
+        "parentId": 18,
+        "color": "#99C2B5",
+        "end": 298.9,
+        "start": 323.2
+    },
+    {
+        "id": 773,
+        "name": "Cisuralian",
+        "level": 4,
+        "parentId": 17,
+        "color": "#EF5845",
+        "end": 272.3,
+        "start": 298.9
+    },
+    {
+        "id": 772,
+        "name": "Guadalupian",
+        "level": 4,
+        "parentId": 17,
+        "color": "#FB745C",
+        "end": 259.9,
+        "start": 272.3
+    },
+    {
+        "id": 771,
+        "name": "Lopingian",
+        "level": 4,
+        "parentId": 17,
+        "color": "#FBA794",
+        "end": 252.2,
+        "start": 259.9
+    },
+    {
+        "id": 46,
+        "name": "Early Triassic",
+        "level": 4,
+        "parentId": 16,
+        "textColor": "white",
+        "color": "#983999",
+        "end": 247.2,
+        "start": 252.2
+    },
+    {
+        "id": 45,
+        "name": "Middle Triassic",
+        "level": 4,
+        "parentId": 16,
+        "textColor": "white",
+        "color": "#B168B1",
+        "end": 237,
+        "start": 247.2
+    },
+    {
+        "id": 44,
+        "name": "Late Triassic",
+        "level": 4,
+        "parentId": 16,
+        "textColor": "white",
+        "color": "#BD8CC3",
+        "end": 201.3,
+        "start": 237
+    },
+    {
+        "id": 43,
+        "name": "Early Jurassic",
+        "level": 4,
+        "parentId": 15,
+        "textColor": "white",
+        "color": "#42AED0",
+        "end": 174.1,
+        "start": 201.3
+    },
+    {
+        "id": 42,
+        "name": "Middle Jurassic",
+        "level": 4,
+        "parentId": 15,
+        "color": "#80CFD8",
+        "end": 163.5,
+        "start": 174.1
+    },
+    {
+        "id": 41,
+        "name": "Late Jurassic",
+        "level": 4,
+        "parentId": 15,
+        "color": "#B3E3EE",
+        "end": 145,
+        "start": 163.5
+    },
+    {
+        "id": 40,
+        "name": "Early Cretaceous",
+        "level": 4,
+        "parentId": 14,
+        "color": "#8CCD57",
+        "end": 100.5,
+        "start": 145
+    },
+    {
+        "id": 39,
+        "name": "Late Cretaceous",
+        "level": 4,
+        "parentId": 14,
+        "color": "#A6D84A",
+        "end": 66,
+        "start": 100.5
+    },
+    {
+        "id": 38,
+        "name": "Paleocene",
+        "level": 4,
+        "parentId": 26,
+        "color": "#FDA75F",
+        "end": 56,
+        "start": 66
+    },
+    {
+        "id": 37,
+        "name": "Eocene",
+        "level": 4,
+        "parentId": 26,
+        "color": "#FDB46C",
+        "end": 33.9,
+        "start": 56
+    },
+    {
+        "id": 36,
+        "name": "Oligocene",
+        "level": 4,
+        "parentId": 26,
+        "color": "#FDC07A",
+        "end": 23.03,
+        "start": 33.9
+    },
+    {
+        "id": 35,
+        "name": "Miocene",
+        "level": 4,
+        "parentId": 25,
+        "color": "#FFFF00",
+        "end": 5.333,
+        "start": 23.03
+    },
+    {
+        "id": 34,
+        "name": "Pliocene",
+        "level": 4,
+        "parentId": 25,
+        "color": "#FFFF99",
+        "end": 2.588,
+        "start": 5.333
+    },
+    {
+        "id": 33,
+        "name": "Pleistocene",
+        "level": 4,
+        "parentId": 12,
+        "color": "#FFF2AE",
+        "end": 0.0117,
+        "start": 2.588
+    },
+    {
+        "id": 32,
+        "name": "Holocene",
+        "level": 4,
+        "parentId": 12,
+        "color": "#FEF2E0",
+        "end": 0,
+        "start": 0.0117
+    },
+    {
+        "id": 1121,
+        "name": "Fortunian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 1111,
+        "color": "#99B575",
+        "end": 529,
+        "start": 541
+    },
+    {
+        "id": 1120,
+        "name": "Stage 2",
+        "level": 5,
+        "leaf": true,
+        "parentId": 1111,
+        "color": "#A6BA80",
+        "end": 521,
+        "start": 529
+    },
+    {
+        "id": 1119,
+        "name": "Stage 3",
+        "level": 5,
+        "leaf": true,
+        "parentId": 1110,
+        "color": "#A6C583",
+        "end": 514,
+        "start": 521
+    },
+    {
+        "id": 1118,
+        "name": "Stage 4",
+        "level": 5,
+        "leaf": true,
+        "parentId": 1110,
+        "color": "#B3CA8E",
+        "end": 509,
+        "start": 514
+    },
+    {
+        "id": 1117,
+        "name": "Stage 5",
+        "level": 5,
+        "leaf": true,
+        "parentId": 1109,
+        "color": "#B3D492",
+        "end": 504.5,
+        "start": 509
+    },
+    {
+        "id": 1116,
+        "name": "Drumian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 1109,
+        "color": "#BFD99D",
+        "end": 500.5,
+        "start": 504.5
+    },
+    {
+        "id": 1087,
+        "name": "Guzhangian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 1109,
+        "color": "#CCDFAA",
+        "end": 497,
+        "start": 500.5
+    },
+    {
+        "id": 1114,
+        "name": "Paibian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 780,
+        "color": "#CCEBAE",
+        "end": 494,
+        "start": 497
+    },
+    {
+        "id": 1113,
+        "name": "Jiangshanian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 780,
+        "color": "#D9F0BB",
+        "end": 489.5,
+        "start": 494
+    },
+    {
+        "id": 1112,
+        "name": "Stage 10",
+        "level": 5,
+        "leaf": true,
+        "parentId": 780,
+        "color": "#E6F5C9",
+        "end": 485.4,
+        "start": 489.5
+    },
+    {
+        "id": 559,
+        "name": "Tremadocian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 31,
+        "textColor": "white",
+        "color": "#33A97E",
+        "end": 477.7,
+        "start": 485.4
+    },
+    {
+        "id": 1010,
+        "name": "Floian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 31,
+        "textColor": "white",
+        "color": "#41B087",
+        "end": 470,
+        "start": 477.7
+    },
+    {
+        "id": 1079,
+        "name": "Dapingian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 30,
+        "textColor": "white",
+        "color": "#66C092",
+        "end": 467.3,
+        "start": 470
+    },
+    {
+        "id": 556,
+        "name": "Darriwilian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 30,
+        "textColor": "white",
+        "color": "#74C69C",
+        "end": 458.4,
+        "start": 467.3
+    },
+    {
+        "id": 1009,
+        "name": "Sandbian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 29,
+        "color": "#8CD094",
+        "end": 453,
+        "start": 458.4
+    },
+    {
+        "id": 1008,
+        "name": "Katian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 29,
+        "color": "#99D69F",
+        "end": 445.2,
+        "start": 453
+    },
+    {
+        "id": 192,
+        "name": "Hirnantian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 29,
+        "color": "#A6DBAB",
+        "end": 443.4,
+        "start": 445.2
+    },
+    {
+        "id": 191,
+        "name": "Rhuddanian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 62,
+        "color": "#A6DCB5",
+        "end": 440.8,
+        "start": 443.4
+    },
+    {
+        "id": 190,
+        "name": "Aeronian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 62,
+        "color": "#B3E1C2",
+        "end": 438.5,
+        "start": 440.8
+    },
+    {
+        "id": 189,
+        "name": "Telychian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 62,
+        "color": "#BFE6D1",
+        "end": 433.4,
+        "start": 438.5
+    },
+    {
+        "id": 188,
+        "name": "Sheinwoodian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 61,
+        "color": "#BFE6C3",
+        "end": 430.5,
+        "start": 433.4
+    },
+    {
+        "id": 785,
+        "name": "Homerian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 61,
+        "color": "#CCEBD1",
+        "end": 427.4,
+        "start": 430.5
+    },
+    {
+        "id": 185,
+        "name": "Gorstian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 60,
+        "color": "#CCECDD",
+        "end": 425.6,
+        "start": 427.4
+    },
+    {
+        "id": 184,
+        "name": "Ludfordian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 60,
+        "color": "#D9F0DF",
+        "end": 423,
+        "start": 425.6
+    },
+    {
+        "id": 3001,
+        "name": "Pridoli",
+        "level": 5,
+        "leaf": true,
+        "parentId": 59,
+        "color": "#E6F5E1",
+        "end": 419.2,
+        "start": 423
+    },
+    {
+        "id": 183,
+        "name": "Lochkovian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 58,
+        "color": "#E5B75A",
+        "end": 410.8,
+        "start": 419.2
+    },
+    {
+        "id": 182,
+        "name": "Pragian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 58,
+        "color": "#E5C468",
+        "end": 407.6,
+        "start": 410.8
+    },
+    {
+        "id": 181,
+        "name": "Emsian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 58,
+        "color": "#E5D075",
+        "end": 393.3,
+        "start": 407.6
+    },
+    {
+        "id": 180,
+        "name": "Eifelian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 57,
+        "color": "#F1D576",
+        "end": 387.7,
+        "start": 393.3
+    },
+    {
+        "id": 179,
+        "name": "Givetian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 57,
+        "color": "#F1E185",
+        "end": 382.7,
+        "start": 387.7
+    },
+    {
+        "id": 178,
+        "name": "Frasnian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 56,
+        "color": "#F2EDAD",
+        "end": 372.2,
+        "start": 382.7
+    },
+    {
+        "id": 177,
+        "name": "Famennian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 56,
+        "color": "#F2EDC5",
+        "end": 358.9,
+        "start": 372.2
+    },
+    {
+        "id": 55,
+        "name": "Tournaisian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 28,
+        "color": "#8CB06C",
+        "end": 346.7,
+        "start": 358.9
+    },
+    {
+        "id": 54,
+        "name": "Visean",
+        "level": 5,
+        "leaf": true,
+        "parentId": 28,
+        "color": "#A6B96C",
+        "end": 330.9,
+        "start": 346.7
+    },
+    {
+        "id": 53,
+        "name": "Serpukhovian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 28,
+        "color": "#BFC26B",
+        "end": 323.2,
+        "start": 330.9
+    },
+    {
+        "id": 52,
+        "name": "Bashkirian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 27,
+        "color": "#99C2B6",
+        "end": 315.2,
+        "start": 323.2
+    },
+    {
+        "id": 51,
+        "name": "Moscovian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 27,
+        "color": "#B3CBB9",
+        "end": 307,
+        "start": 315.2
+    },
+    {
+        "id": 50,
+        "name": "Kasimovian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 27,
+        "color": "#BFD0C5",
+        "end": 303.7,
+        "start": 307
+    },
+    {
+        "id": 49,
+        "name": "Gzhelian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 27,
+        "color": "#CCD4C7",
+        "end": 298.9,
+        "start": 303.7
+    },
+    {
+        "id": 151,
+        "name": "Asselian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 773,
+        "color": "#E36350",
+        "end": 295.5,
+        "start": 298.9
+    },
+    {
+        "id": 150,
+        "name": "Sakmarian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 773,
+        "color": "#E36F5C",
+        "end": 290.1,
+        "start": 295.5
+    },
+    {
+        "id": 149,
+        "name": "Artinskian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 773,
+        "color": "#E37B68",
+        "end": 279.3,
+        "start": 290.1
+    },
+    {
+        "id": 148,
+        "name": "Kungurian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 773,
+        "color": "#E38776",
+        "end": 272.3,
+        "start": 279.3
+    },
+    {
+        "id": 717,
+        "name": "Roadian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 772,
+        "color": "#FB8069",
+        "end": 268.8,
+        "start": 272.3
+    },
+    {
+        "id": 146,
+        "name": "Wordian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 772,
+        "color": "#FB8D76",
+        "end": 265.1,
+        "start": 268.8
+    },
+    {
+        "id": 145,
+        "name": "Capitanian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 772,
+        "color": "#FB9A85",
+        "end": 259.9,
+        "start": 265.1
+    },
+    {
+        "id": 716,
+        "name": "Wuchiapingian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 771,
+        "color": "#FCB4A2",
+        "end": 254.2,
+        "start": 259.9
+    },
+    {
+        "id": 715,
+        "name": "Changhsingian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 771,
+        "color": "#FCC0B2",
+        "end": 252.2,
+        "start": 254.2
+    },
+    {
+        "id": 653,
+        "name": "Induan",
+        "level": 5,
+        "leaf": true,
+        "parentId": 46,
+        "textColor": "white",
+        "color": "#A4469F",
+        "end": 251.2,
+        "start": 252.2
+    },
+    {
+        "id": 652,
+        "name": "Olenekian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 46,
+        "textColor": "white",
+        "color": "#B051A5",
+        "end": 247.2,
+        "start": 251.2
+    },
+    {
+        "id": 139,
+        "name": "Anisian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 45,
+        "textColor": "white",
+        "color": "#BC75B7",
+        "end": 242,
+        "start": 247.2
+    },
+    {
+        "id": 138,
+        "name": "Ladinian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 45,
+        "textColor": "white",
+        "color": "#C983BF",
+        "end": 237,
+        "start": 242
+    },
+    {
+        "id": 137,
+        "name": "Carnian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 44,
+        "color": "#C99BCB",
+        "end": 228,
+        "start": 237
+    },
+    {
+        "id": 136,
+        "name": "Norian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 44,
+        "color": "#D6AAD3",
+        "end": 208.5,
+        "start": 228
+    },
+    {
+        "id": 135,
+        "name": "Rhaetian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 44,
+        "textColor": "white",
+        "color": "#E3B9DB",
+        "end": 201.3,
+        "start": 208.5
+    },
+    {
+        "id": 134,
+        "name": "Hettangian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 43,
+        "textColor": "white",
+        "color": "#4EB3D3",
+        "end": 199.3,
+        "start": 201.3
+    },
+    {
+        "id": 133,
+        "name": "Sinemurian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 43,
+        "textColor": "white",
+        "color": "#67BCD8",
+        "end": 190.8,
+        "start": 199.3
+    },
+    {
+        "id": 132,
+        "name": "Pliensbachian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 43,
+        "textColor": "white",
+        "color": "#80C5DD",
+        "end": 182.7,
+        "start": 190.8
+    },
+    {
+        "id": 131,
+        "name": "Toarcian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 43,
+        "color": "#99CEE3",
+        "end": 174.1,
+        "start": 182.7
+    },
+    {
+        "id": 130,
+        "name": "Aalenian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 42,
+        "color": "#9AD9DD",
+        "end": 170.3,
+        "start": 174.1
+    },
+    {
+        "id": 129,
+        "name": "Bajocian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 42,
+        "color": "#A6DDE0",
+        "end": 168.3,
+        "start": 170.3
+    },
+    {
+        "id": 128,
+        "name": "Bathonian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 42,
+        "color": "#B3E2E3",
+        "end": 166.1,
+        "start": 168.3
+    },
+    {
+        "id": 127,
+        "name": "Callovian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 42,
+        "color": "#BFE7E5",
+        "end": 163.5,
+        "start": 166.1
+    },
+    {
+        "id": 126,
+        "name": "Oxfordian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 41,
+        "color": "#BFE7F1",
+        "end": 157.3,
+        "start": 163.5
+    },
+    {
+        "id": 125,
+        "name": "Kimmeridgian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 41,
+        "color": "#CCECF4",
+        "end": 152.1,
+        "start": 157.3
+    },
+    {
+        "id": 124,
+        "name": "Tithonian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 41,
+        "color": "#D9F1F7",
+        "end": 145,
+        "start": 152.1
+    },
+    {
+        "id": 123,
+        "name": "Berriasian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 40,
+        "color": "#8CCD60",
+        "end": 139.8,
+        "start": 145
+    },
+    {
+        "id": 122,
+        "name": "Valanginian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 40,
+        "color": "#99D36A",
+        "end": 132.9,
+        "start": 139.8
+    },
+    {
+        "id": 121,
+        "name": "Hauterivian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 40,
+        "color": "#A6D975",
+        "end": 129.4,
+        "start": 132.9
+    },
+    {
+        "id": 120,
+        "name": "Barremian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 40,
+        "color": "#B3DF7F",
+        "end": 125,
+        "start": 129.4
+    },
+    {
+        "id": 119,
+        "name": "Aptian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 40,
+        "color": "#BFE48A",
+        "end": 113,
+        "start": 125
+    },
+    {
+        "id": 118,
+        "name": "Albian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 40,
+        "color": "#CCEA97",
+        "end": 100.5,
+        "start": 113
+    },
+    {
+        "id": 117,
+        "name": "Cenomanian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 39,
+        "color": "#B3DE53",
+        "end": 93.9,
+        "start": 100.5
+    },
+    {
+        "id": 116,
+        "name": "Turonian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 39,
+        "color": "#BFE35D",
+        "end": 89.8,
+        "start": 93.9
+    },
+    {
+        "id": 115,
+        "name": "Coniacian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 39,
+        "color": "#CCE968",
+        "end": 86.3,
+        "start": 89.8
+    },
+    {
+        "id": 114,
+        "name": "Santonian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 39,
+        "color": "#D9EF74",
+        "end": 83.6,
+        "start": 86.3
+    },
+    {
+        "id": 113,
+        "name": "Campanian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 39,
+        "color": "#E6F47F",
+        "end": 72.1,
+        "start": 83.6
+    },
+    {
+        "id": 112,
+        "name": "Maastrichtian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 39,
+        "color": "#F2FA8C",
+        "end": 66,
+        "start": 72.1
+    },
+    {
+        "id": 111,
+        "name": "Danian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 38,
+        "color": "#FDB462",
+        "end": 61.6,
+        "start": 66
+    },
+    {
+        "id": 743,
+        "name": "Selandian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 38,
+        "color": "#FEBF65",
+        "end": 59.2,
+        "start": 61.6
+    },
+    {
+        "id": 110,
+        "name": "Thanetian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 38,
+        "color": "#FDBF6F",
+        "end": 56,
+        "start": 59.2
+    },
+    {
+        "id": 109,
+        "name": "Ypresian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 37,
+        "color": "#FCA773",
+        "end": 47.8,
+        "start": 56
+    },
+    {
+        "id": 108,
+        "name": "Lutetian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 37,
+        "color": "#FCB482",
+        "end": 41.3,
+        "start": 47.8
+    },
+    {
+        "id": 107,
+        "name": "Bartonian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 37,
+        "color": "#FDC091",
+        "end": 38,
+        "start": 41.3
+    },
+    {
+        "id": 106,
+        "name": "Priabonian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 37,
+        "color": "#FDCDA1",
+        "end": 33.9,
+        "start": 38
+    },
+    {
+        "id": 105,
+        "name": "Rupelian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 36,
+        "color": "#FED99A",
+        "end": 28.1,
+        "start": 33.9
+    },
+    {
+        "id": 104,
+        "name": "Chattian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 36,
+        "color": "#FEE6AA",
+        "end": 23.03,
+        "start": 28.1
+    },
+    {
+        "id": 103,
+        "name": "Aquitanian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 35,
+        "color": "#FFFF33",
+        "end": 20.44,
+        "start": 23.03
+    },
+    {
+        "id": 102,
+        "name": "Burdigalian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 35,
+        "color": "#FFFF41",
+        "end": 15.97,
+        "start": 20.44
+    },
+    {
+        "id": 101,
+        "name": "Langhian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 35,
+        "color": "#FFFF4D",
+        "end": 13.82,
+        "start": 15.97
+    },
+    {
+        "id": 100,
+        "name": "Serravallian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 35,
+        "color": "#FFFF59",
+        "end": 11.62,
+        "start": 13.82
+    },
+    {
+        "id": 99,
+        "name": "Tortonian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 35,
+        "color": "#FFFF66",
+        "end": 7.246,
+        "start": 11.62
+    },
+    {
+        "id": 98,
+        "name": "Messinian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 35,
+        "color": "#FFFF73",
+        "end": 5.333,
+        "start": 7.246
+    },
+    {
+        "id": 97,
+        "name": "Zanclean",
+        "level": 5,
+        "leaf": true,
+        "parentId": 34,
+        "color": "#FFFFB3",
+        "end": 3.6,
+        "start": 5.333
+    },
+    {
+        "id": 96,
+        "name": "Piacenzian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 34,
+        "color": "#FFFFBF",
+        "end": 2.588,
+        "start": 3.6
+    },
+    {
+        "id": 741,
+        "name": "Gelasian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 33,
+        "color": "#FFEDB3",
+        "end": 1.806,
+        "start": 2.588
+    },
+    {
+        "id": 740,
+        "name": "Calabbrian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 33,
+        "color": "#FFF2BA",
+        "end": 0.781,
+        "start": 1.806
+    },
+    {
+        "id": 923,
+        "name": "Chibanian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 33,
+        "color": "#FFF2C7",
+        "end": 0.126,
+        "start": 0.781
+    },
+    {
+        "id": 922,
+        "name": "Late Pleistocene",
+        "level": 5,
+        "leaf": true,
+        "parentId": 33,
+        "color": "#FFF2D3",
+        "end": 0.0117,
+        "start": 0.126
+    },
+    {
+        "id": 3002,
+        "name": "Greenlandian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 32,
+        "color": "#FEECDB",
+        "end": 0.008,
+        "start": 0.0117
+    },
+    {
+        "id": 3003,
+        "name": "Northgrippian",
+        "level": 5,
+        "leaf": true,
+        "parentId": 32,
+        "color": "#FDECE4",
+        "end": 0.004,
+        "start": 0.008
+    },
+    {
+        "id": 3004,
+        "name": "Meghalayan",
+        "level": 5,
+        "leaf": true,
+        "parentId": 32,
+        "color": "#FDEDEC",
+        "end": 0,
+        "start": 0.004
+    }
+]
