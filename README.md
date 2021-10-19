@@ -9,7 +9,7 @@ A live demo of v1 (compatible with d3 version 3) can be found at
 [bl.ocks.org](http://bl.ocks.org/jczaplew/7546689).
 
 ```js
-import { geoTimescale } from "geotimescale";
+import { geoTimescale } from "@macrostrat/d3-timescale";
 
 geoTimescale("#timescale-container", [config]);
 ```
