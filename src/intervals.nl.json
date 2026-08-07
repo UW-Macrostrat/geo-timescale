@@ -1,0 +1,1201 @@
+{
+  "name": "Geologische tijd",
+  "textColor": "white",
+  "color": "#000",
+  "start": 4567,
+  "end": 0,
+  "children": [
+    {
+      "name": "Hadeïcum",
+      "textColor": "white",
+      "color": "#AE027E",
+      "start": 4567,
+      "end": 4031
+    },
+    {
+      "name": "Archeïcum",
+      "textColor": "white",
+      "color": "#F0047F",
+      "start": 4031,
+      "end": 2500,
+      "children": [
+        {
+          "name": "Eoarcheïcum",
+          "textColor": "white",
+          "color": "#DA037F",
+          "start": 4031,
+          "end": 3600
+        },
+        {
+          "name": "Paleoarcheïcum",
+          "textColor": "white",
+          "color": "#F4449F",
+          "start": 3600,
+          "end": 3200
+        },
+        {
+          "name": "Mesoarcheïcum",
+          "textColor": "white",
+          "color": "#F768A9",
+          "start": 3200,
+          "end": 2800
+        },
+        {
+          "name": "Neoarcheïcum",
+          "color": "#F99BC1",
+          "start": 2800,
+          "end": 2500
+        }
+      ]
+    },
+    {
+      "name": "Proterozoïcum",
+      "textColor": "white",
+      "color": "#F73563",
+      "start": 2500,
+      "end": 538.8,
+      "children": [
+        {
+          "name": "Paleoproterozoïcum",
+          "textColor": "white",
+          "color": "#F74370",
+          "start": 2500,
+          "end": 1600,
+          "children": [
+            {
+              "name": "Siderium",
+              "textColor": "white",
+              "color": "#F74F7C",
+              "start": 2500,
+              "end": 2300
+            },
+            {
+              "name": "Rhyacium",
+              "textColor": "white",
+              "color": "#F75B89",
+              "start": 2300,
+              "end": 2050
+            },
+            {
+              "name": "Orosirium",
+              "textColor": "white",
+              "color": "#F76898",
+              "start": 2050,
+              "end": 1800
+            },
+            {
+              "name": "Statherium",
+              "textColor": "white",
+              "color": "#F875A7",
+              "start": 1800,
+              "end": 1600
+            }
+          ]
+        },
+        {
+          "name": "Mesoproterozoïcum",
+          "color": "#FDB462",
+          "start": 1600,
+          "end": 1000,
+          "children": [
+            {
+              "name": "Calymmium",
+              "color": "#FDC07A",
+              "start": 1600,
+              "end": 1400
+            },
+            {
+              "name": "Ectasium",
+              "color": "#FDCC8A",
+              "start": 1400,
+              "end": 1200
+            },
+            {
+              "name": "Stenium",
+              "color": "#FED99A",
+              "start": 1200,
+              "end": 1000
+            }
+          ]
+        },
+        {
+          "name": "Neoproterozoïcum",
+          "color": "#FEB342",
+          "start": 1000,
+          "end": 538.8,
+          "children": [
+            {
+              "name": "Tonium",
+              "color": "#FEBF4E",
+              "start": 1000,
+              "end": 720
+            },
+            {
+              "name": "Cryogenium",
+              "color": "#FECC5C",
+              "start": 720,
+              "end": 635
+            },
+            {
+              "name": "Ediacarium",
+              "color": "#FED96A",
+              "start": 635,
+              "end": 538.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fanerozoïcum",
+      "color": "#9AD9DD",
+      "start": 538.8,
+      "end": 0,
+      "children": [
+        {
+          "name": "Paleozoïcum",
+          "abbr": "Pz",
+          "color": "#99C08D",
+          "start": 538.8,
+          "end": 251.902,
+          "children": [
+            {
+              "name": "Cambrium",
+              "abbr": "Cm",
+              "textColor": "white",
+              "color": "#7FA056",
+              "start": 538.8,
+              "end": 486.85,
+              "children": [
+                {
+                  "name": "Terreneuvien",
+                  "color": "#8CB06C",
+                  "start": 538.8,
+                  "end": 521,
+                  "children": [
+                    {
+                      "name": "Fortunien",
+                      "color": "#99B575",
+                      "start": 538.8,
+                      "end": 529
+                    },
+                    {
+                      "name": "Etage 2",
+                      "color": "#A6BA80",
+                      "start": 529,
+                      "end": 521
+                    }
+                  ]
+                },
+                {
+                  "name": "Serie 2",
+                  "color": "#99C078",
+                  "start": 521,
+                  "end": 506.5,
+                  "children": [
+                    {
+                      "name": "Etage 3",
+                      "color": "#A6C583",
+                      "start": 521,
+                      "end": 514.5
+                    },
+                    {
+                      "name": "Etage 4",
+                      "color": "#B3CA8E",
+                      "start": 514.5,
+                      "end": 506.5
+                    }
+                  ]
+                },
+                {
+                  "name": "Miaolingien",
+                  "color": "#A6CF86",
+                  "start": 506.5,
+                  "end": 497,
+                  "children": [
+                    {
+                      "name": "Wuliuien",
+                      "color": "#B3D492",
+                      "start": 506.5,
+                      "end": 504.5
+                    },
+                    {
+                      "name": "Drumien",
+                      "color": "#BFD99D",
+                      "start": 504.5,
+                      "end": 500.5
+                    },
+                    {
+                      "name": "Guzhangien",
+                      "color": "#CCDFAA",
+                      "start": 500.5,
+                      "end": 497
+                    }
+                  ]
+                },
+                {
+                  "name": "Furongien",
+                  "color": "#B3E095",
+                  "start": 497,
+                  "end": 486.85,
+                  "children": [
+                    {
+                      "name": "Paibien",
+                      "color": "#CCEBAE",
+                      "start": 497,
+                      "end": 494.2
+                    },
+                    {
+                      "name": "Jiangshanien",
+                      "color": "#D9F0BB",
+                      "start": 494.2,
+                      "end": 491
+                    },
+                    {
+                      "name": "Etage 10",
+                      "color": "#E6F5C9",
+                      "start": 491,
+                      "end": 486.85
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Ordovicium",
+              "abbr": "O",
+              "textColor": "white",
+              "color": "#009270",
+              "start": 486.85,
+              "end": 443.1,
+              "children": [
+                {
+                  "name": "Vroeg-Ordovicium",
+                  "textColor": "white",
+                  "color": "#1A9D6F",
+                  "start": 486.85,
+                  "end": 471.3,
+                  "children": [
+                    {
+                      "name": "Tremadocien",
+                      "textColor": "white",
+                      "color": "#33A97E",
+                      "start": 486.85,
+                      "end": 477.1
+                    },
+                    {
+                      "name": "Floien",
+                      "textColor": "white",
+                      "color": "#41B087",
+                      "start": 477.1,
+                      "end": 471.3
+                    }
+                  ]
+                },
+                {
+                  "name": "Midden-Ordovicium",
+                  "textColor": "white",
+                  "color": "#4DB47E",
+                  "start": 471.3,
+                  "end": 458.2,
+                  "children": [
+                    {
+                      "name": "Dapingien",
+                      "color": "#66C092",
+                      "start": 471.3,
+                      "end": 469.4
+                    },
+                    {
+                      "name": "Darriwilien",
+                      "color": "#74C69C",
+                      "start": 469.4,
+                      "end": 458.2
+                    }
+                  ]
+                },
+                {
+                  "name": "Laat-Ordovicium",
+                  "color": "#7FCA93",
+                  "start": 458.2,
+                  "end": 443.1,
+                  "children": [
+                    {
+                      "name": "Sandbien",
+                      "color": "#8CD094",
+                      "start": 458.2,
+                      "end": 452.8
+                    },
+                    {
+                      "name": "Katien",
+                      "color": "#99D69F",
+                      "start": 452.8,
+                      "end": 445.2
+                    },
+                    {
+                      "name": "Hirnantien",
+                      "color": "#A6DBAB",
+                      "start": 445.2,
+                      "end": 443.1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Siluur",
+              "abbr": "S",
+              "color": "#B3E1B6",
+              "start": 443.1,
+              "end": 419.62,
+              "children": [
+                {
+                  "name": "Llandovery",
+                  "color": "#99D7B3",
+                  "start": 443.1,
+                  "end": 432.9,
+                  "children": [
+                    {
+                      "name": "Rhuddanien",
+                      "color": "#A6DCB5",
+                      "start": 443.1,
+                      "end": 440.5
+                    },
+                    {
+                      "name": "Aeronien",
+                      "color": "#B3E1C2",
+                      "start": 440.5,
+                      "end": 438.6
+                    },
+                    {
+                      "name": "Telychien",
+                      "color": "#BFE6CF",
+                      "start": 438.6,
+                      "end": 432.9
+                    }
+                  ]
+                },
+                {
+                  "name": "Wenlock",
+                  "color": "#B3E1C2",
+                  "start": 432.9,
+                  "end": 426.7,
+                  "children": [
+                    {
+                      "name": "Sheinwoodien",
+                      "color": "#BFE6C3",
+                      "start": 432.9,
+                      "end": 430.6
+                    },
+                    {
+                      "name": "Homerien",
+                      "color": "#CCEBD1",
+                      "start": 430.6,
+                      "end": 426.7
+                    }
+                  ]
+                },
+                {
+                  "name": "Ludlow",
+                  "color": "#BFE6CF",
+                  "start": 426.7,
+                  "end": 422.7,
+                  "children": [
+                    {
+                      "name": "Gorstien",
+                      "color": "#CCECDD",
+                      "start": 426.7,
+                      "end": 425
+                    },
+                    {
+                      "name": "Ludfordien",
+                      "color": "#D9F0DF",
+                      "start": 425,
+                      "end": 422.7
+                    }
+                  ]
+                },
+                {
+                  "name": "Pridoli",
+                  "color": "#E6F5E1",
+                  "start": 422.7,
+                  "end": 419.62,
+                  "children": [
+                    {
+                      "name": "Pridoli",
+                      "color": "#E6F5E1",
+                      "start": 422.7,
+                      "end": 419.62
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Devoon",
+              "abbr": "D",
+              "textColor": "white",
+              "color": "#CB8C37",
+              "start": 419.62,
+              "end": 358.86,
+              "children": [
+                {
+                  "name": "Vroeg-Devoon",
+                  "color": "#E5AC4D",
+                  "start": 419.62,
+                  "end": 393.47,
+                  "children": [
+                    {
+                      "name": "Lochkovien",
+                      "color": "#E5B75A",
+                      "start": 419.62,
+                      "end": 413.02
+                    },
+                    {
+                      "name": "Pragien",
+                      "color": "#E5C468",
+                      "start": 413.02,
+                      "end": 410.62
+                    },
+                    {
+                      "name": "Emsien",
+                      "color": "#E5D075",
+                      "start": 410.62,
+                      "end": 393.47
+                    }
+                  ]
+                },
+                {
+                  "name": "Midden-Devoon",
+                  "color": "#F1C868",
+                  "start": 393.47,
+                  "end": 382.31,
+                  "children": [
+                    {
+                      "name": "Eifelien",
+                      "color": "#F1D576",
+                      "start": 393.47,
+                      "end": 387.95
+                    },
+                    {
+                      "name": "Givetien",
+                      "color": "#F1E185",
+                      "start": 387.95,
+                      "end": 382.31
+                    }
+                  ]
+                },
+                {
+                  "name": "Laat-Devoon",
+                  "color": "#F1E19D",
+                  "start": 382.31,
+                  "end": 358.86,
+                  "children": [
+                    {
+                      "name": "Frasnien",
+                      "color": "#F2EDAD",
+                      "start": 382.31,
+                      "end": 372.15
+                    },
+                    {
+                      "name": "Famennien",
+                      "color": "#F2EDB3",
+                      "start": 372.15,
+                      "end": 358.86
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Carboon",
+              "abbr": "C",
+              "textColor": "white",
+              "color": "#67A599",
+              "start": 358.86,
+              "end": 298.9,
+              "children": [
+                {
+                  "name": "Mississippien",
+                  "textColor": "white",
+                  "color": "#678F66",
+                  "start": 358.86,
+                  "end": 323.4,
+                  "children": [
+                    {
+                      "name": "Tournaisien",
+                      "color": "#8CB06C",
+                      "start": 358.86,
+                      "end": 346.7
+                    },
+                    {
+                      "name": "Viséen",
+                      "color": "#A6B96C",
+                      "start": 346.7,
+                      "end": 330.3
+                    },
+                    {
+                      "name": "Serpukhovien",
+                      "color": "#BFC26B",
+                      "start": 330.3,
+                      "end": 323.4
+                    }
+                  ]
+                },
+                {
+                  "name": "Pennsylvanien",
+                  "color": "#7EBCC6",
+                  "start": 323.4,
+                  "end": 298.9,
+                  "children": [
+                    {
+                      "name": "Bashkirien",
+                      "color": "#99C2B5",
+                      "start": 323.4,
+                      "end": 315.2
+                    },
+                    {
+                      "name": "Moscovien",
+                      "color": "#B3CBB9",
+                      "start": 315.2,
+                      "end": 307
+                    },
+                    {
+                      "name": "Kasimovien",
+                      "color": "#BFD0C5",
+                      "start": 307,
+                      "end": 303.7
+                    },
+                    {
+                      "name": "Gzhelien",
+                      "color": "#CCD4C7",
+                      "start": 303.7,
+                      "end": 298.9
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Perm",
+              "abbr": "P",
+              "textColor": "white",
+              "color": "#F04028",
+              "start": 298.9,
+              "end": 251.902,
+              "children": [
+                {
+                  "name": "Cisuralien",
+                  "textColor": "white",
+                  "color": "#EF5845",
+                  "start": 298.9,
+                  "end": 274.4,
+                  "children": [
+                    {
+                      "name": "Asselien",
+                      "textColor": "white",
+                      "color": "#E36350",
+                      "start": 298.9,
+                      "end": 293.52
+                    },
+                    {
+                      "name": "Sakmarien",
+                      "textColor": "white",
+                      "color": "#E36F5C",
+                      "start": 293.52,
+                      "end": 290.1
+                    },
+                    {
+                      "name": "Artinskien",
+                      "textColor": "white",
+                      "color": "#E37B68",
+                      "start": 290.1,
+                      "end": 283.3
+                    },
+                    {
+                      "name": "Kungurien",
+                      "textColor": "white",
+                      "color": "#E38776",
+                      "start": 283.3,
+                      "end": 274.4
+                    }
+                  ]
+                },
+                {
+                  "name": "Guadalupien",
+                  "textColor": "white",
+                  "color": "#FB745C",
+                  "start": 274.4,
+                  "end": 259.857,
+                  "children": [
+                    {
+                      "name": "Roadien",
+                      "color": "#FB8069",
+                      "start": 274.4,
+                      "end": 266.9
+                    },
+                    {
+                      "name": "Wordien",
+                      "color": "#FB8D76",
+                      "start": 266.9,
+                      "end": 264.28
+                    },
+                    {
+                      "name": "Capitanien",
+                      "color": "#FB9A85",
+                      "start": 264.28,
+                      "end": 259.857
+                    }
+                  ]
+                },
+                {
+                  "name": "Lopingien",
+                  "color": "#FBA794",
+                  "start": 259.857,
+                  "end": 251.902,
+                  "children": [
+                    {
+                      "name": "Wuchiapingien",
+                      "color": "#FCB4A2",
+                      "start": 259.857,
+                      "end": 254.14
+                    },
+                    {
+                      "name": "Changhsingien",
+                      "color": "#FCC0B2",
+                      "start": 254.14,
+                      "end": 251.902
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Mesozoïcum",
+          "abbr": "Mz",
+          "color": "#67C5CA",
+          "start": 251.902,
+          "end": 66,
+          "children": [
+            {
+              "name": "Trias",
+              "abbr": "Tr",
+              "textColor": "white",
+              "color": "#812B92",
+              "start": 251.902,
+              "end": 201.4,
+              "children": [
+                {
+                  "name": "Vroeg-Trias",
+                  "textColor": "white",
+                  "color": "#983999",
+                  "start": 251.902,
+                  "end": 247,
+                  "children": [
+                    {
+                      "name": "Induen",
+                      "textColor": "white",
+                      "color": "#A4469F",
+                      "start": 251.902,
+                      "end": 250.8
+                    },
+                    {
+                      "name": "Olenekien",
+                      "textColor": "white",
+                      "color": "#B051A5",
+                      "start": 250.8,
+                      "end": 247
+                    }
+                  ]
+                },
+                {
+                  "name": "Midden-Trias",
+                  "textColor": "white",
+                  "color": "#B168B1",
+                  "start": 247,
+                  "end": 237,
+                  "children": [
+                    {
+                      "name": "Anisien",
+                      "textColor": "white",
+                      "color": "#BC75B7",
+                      "start": 247,
+                      "end": 241.464
+                    },
+                    {
+                      "name": "Ladinien",
+                      "textColor": "white",
+                      "color": "#C983BF",
+                      "start": 241.464,
+                      "end": 237
+                    }
+                  ]
+                },
+                {
+                  "name": "Laat-Trias",
+                  "textColor": "white",
+                  "color": "#BD8CC3",
+                  "start": 237,
+                  "end": 201.4,
+                  "children": [
+                    {
+                      "name": "Carnien",
+                      "color": "#C99BCB",
+                      "start": 237,
+                      "end": 227.3
+                    },
+                    {
+                      "name": "Norien",
+                      "color": "#D6AAD3",
+                      "start": 227.3,
+                      "end": 205.7
+                    },
+                    {
+                      "name": "Rhaetien",
+                      "color": "#E3B9DB",
+                      "start": 205.7,
+                      "end": 201.4
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Jura",
+              "abbr": "J",
+              "color": "#34B2C9",
+              "start": 201.4,
+              "end": 143.1,
+              "children": [
+                {
+                  "name": "Vroeg-Jura",
+                  "textColor": "white",
+                  "color": "#42AED0",
+                  "start": 201.4,
+                  "end": 174.7,
+                  "children": [
+                    {
+                      "name": "Hettangien",
+                      "color": "#4EB3D3",
+                      "start": 201.4,
+                      "end": 199.5
+                    },
+                    {
+                      "name": "Sinemurien",
+                      "color": "#67BCD8",
+                      "start": 199.5,
+                      "end": 192.9
+                    },
+                    {
+                      "name": "Pliensbachien",
+                      "color": "#80C5DD",
+                      "start": 192.9,
+                      "end": 184.2
+                    },
+                    {
+                      "name": "Toarcien",
+                      "color": "#99CEE3",
+                      "start": 184.2,
+                      "end": 174.7
+                    }
+                  ]
+                },
+                {
+                  "name": "Midden-Jura",
+                  "color": "#80CFD8",
+                  "start": 174.7,
+                  "end": 161.5,
+                  "children": [
+                    {
+                      "name": "Aalenien",
+                      "color": "#9AD9DD",
+                      "start": 174.7,
+                      "end": 170.9
+                    },
+                    {
+                      "name": "Bajocien",
+                      "color": "#A6DDE0",
+                      "start": 170.9,
+                      "end": 168.2
+                    },
+                    {
+                      "name": "Bathonien",
+                      "color": "#B3E2E3",
+                      "start": 168.2,
+                      "end": 165.3
+                    },
+                    {
+                      "name": "Callovien",
+                      "color": "#BFE7E5",
+                      "start": 165.3,
+                      "end": 161.5
+                    }
+                  ]
+                },
+                {
+                  "name": "Laat-Jura",
+                  "color": "#B3E3EE",
+                  "start": 161.5,
+                  "end": 143.1,
+                  "children": [
+                    {
+                      "name": "Oxfordien",
+                      "color": "#BFE7F1",
+                      "start": 161.5,
+                      "end": 154.8
+                    },
+                    {
+                      "name": "Kimmeridgien",
+                      "color": "#CCECF4",
+                      "start": 154.8,
+                      "end": 149.2
+                    },
+                    {
+                      "name": "Tithonien",
+                      "color": "#D9F1F7",
+                      "start": 149.2,
+                      "end": 143.1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Krijt",
+              "abbr": "K",
+              "color": "#7FC64E",
+              "start": 143.1,
+              "end": 66,
+              "children": [
+                {
+                  "name": "Vroeg-Krijt",
+                  "color": "#8CCD57",
+                  "start": 143.1,
+                  "end": 100.5,
+                  "children": [
+                    {
+                      "name": "Berriasien",
+                      "color": "#8CCD60",
+                      "start": 143.1,
+                      "end": 137.05
+                    },
+                    {
+                      "name": "Valanginien",
+                      "color": "#99D36A",
+                      "start": 137.05,
+                      "end": 132.6
+                    },
+                    {
+                      "name": "Hauterivien",
+                      "color": "#A6D975",
+                      "start": 132.6,
+                      "end": 125.77
+                    },
+                    {
+                      "name": "Barremien",
+                      "color": "#B3DF7F",
+                      "start": 125.77,
+                      "end": 121.4
+                    },
+                    {
+                      "name": "Aptien",
+                      "color": "#BFE48A",
+                      "start": 121.4,
+                      "end": 113.2
+                    },
+                    {
+                      "name": "Albien",
+                      "color": "#CCEA97",
+                      "start": 113.2,
+                      "end": 100.5
+                    }
+                  ]
+                },
+                {
+                  "name": "Laat-Krijt",
+                  "color": "#A6D84A",
+                  "start": 100.5,
+                  "end": 66,
+                  "children": [
+                    {
+                      "name": "Cenomanien",
+                      "color": "#B3DE53",
+                      "start": 100.5,
+                      "end": 93.9
+                    },
+                    {
+                      "name": "Turonien",
+                      "color": "#BFE35D",
+                      "start": 93.9,
+                      "end": 89.8
+                    },
+                    {
+                      "name": "Coniacien",
+                      "color": "#CCE968",
+                      "start": 89.8,
+                      "end": 85.7
+                    },
+                    {
+                      "name": "Santonien",
+                      "color": "#D9EF74",
+                      "start": 85.7,
+                      "end": 83.6
+                    },
+                    {
+                      "name": "Campanien",
+                      "color": "#E6F47F",
+                      "start": 83.6,
+                      "end": 72.2
+                    },
+                    {
+                      "name": "Maastrichtien",
+                      "color": "#F2FA8C",
+                      "start": 72.2,
+                      "end": 66
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Kenozoïcum",
+          "abbr": "Cz",
+          "color": "#F2F91D",
+          "start": 66,
+          "end": 0,
+          "children": [
+            {
+              "name": "Paleogeen",
+              "abbr": "Pg",
+              "color": "#FD9A52",
+              "start": 66,
+              "end": 23.04,
+              "children": [
+                {
+                  "name": "Paleoceen",
+                  "color": "#FDA75F",
+                  "start": 66,
+                  "end": 56,
+                  "children": [
+                    {
+                      "name": "Danien",
+                      "color": "#FDB462",
+                      "start": 66,
+                      "end": 61.66
+                    },
+                    {
+                      "name": "Selandien",
+                      "color": "#FEBF65",
+                      "start": 61.66,
+                      "end": 59.24
+                    },
+                    {
+                      "name": "Thanetien",
+                      "color": "#FDBF6F",
+                      "start": 59.24,
+                      "end": 56
+                    }
+                  ]
+                },
+                {
+                  "name": "Eoceen",
+                  "color": "#FDB46C",
+                  "start": 56,
+                  "end": 33.9,
+                  "children": [
+                    {
+                      "name": "Ypresien",
+                      "color": "#FCA773",
+                      "start": 56,
+                      "end": 48.07
+                    },
+                    {
+                      "name": "Lutetien",
+                      "color": "#FDB482",
+                      "start": 48.07,
+                      "end": 41.03
+                    },
+                    {
+                      "name": "Bartonien",
+                      "color": "#FDC091",
+                      "start": 41.03,
+                      "end": 37.71
+                    },
+                    {
+                      "name": "Priabonien",
+                      "color": "#FDCDA1",
+                      "start": 37.71,
+                      "end": 33.9
+                    }
+                  ]
+                },
+                {
+                  "name": "Oligoceen",
+                  "color": "#FEC07A",
+                  "start": 33.9,
+                  "end": 23.04,
+                  "children": [
+                    {
+                      "name": "Rupelien",
+                      "color": "#FED99A",
+                      "start": 33.9,
+                      "end": 27.3
+                    },
+                    {
+                      "name": "Chattien",
+                      "color": "#FEE6AA",
+                      "start": 27.3,
+                      "end": 23.04
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Neogeen",
+              "abbr": "Ng",
+              "color": "#FFE619",
+              "start": 23.04,
+              "end": 2.58,
+              "children": [
+                {
+                  "name": "Mioceen",
+                  "color": "#FFFF00",
+                  "start": 23.04,
+                  "end": 5.333,
+                  "children": [
+                    {
+                      "name": "Aquitanien",
+                      "color": "#FFFF33",
+                      "start": 23.04,
+                      "end": 20.45
+                    },
+                    {
+                      "name": "Burdigalien",
+                      "color": "#FFFF41",
+                      "start": 20.45,
+                      "end": 15.98
+                    },
+                    {
+                      "name": "Langhien",
+                      "color": "#FFFF4D",
+                      "start": 15.98,
+                      "end": 13.82
+                    },
+                    {
+                      "name": "Serravallien",
+                      "color": "#FFFF59",
+                      "start": 13.82,
+                      "end": 11.63
+                    },
+                    {
+                      "name": "Tortonien",
+                      "color": "#FFFF66",
+                      "start": 11.63,
+                      "end": 7.246
+                    },
+                    {
+                      "name": "Messinien",
+                      "color": "#FFFF73",
+                      "start": 7.246,
+                      "end": 5.333
+                    }
+                  ]
+                },
+                {
+                  "name": "Plioceen",
+                  "color": "#FFFF99",
+                  "start": 5.333,
+                  "end": 2.58,
+                  "children": [
+                    {
+                      "name": "Zancléen",
+                      "color": "#FFFFB3",
+                      "start": 5.333,
+                      "end": 3.6
+                    },
+                    {
+                      "name": "Piacenzien",
+                      "color": "#FFFFBF",
+                      "start": 3.6,
+                      "end": 2.58
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Kwartair",
+              "color": "#F9F97F",
+              "start": 2.58,
+              "end": 0,
+              "children": [
+                {
+                  "name": "Pleistoceen",
+                  "color": "#FFEFAF",
+                  "start": 2.58,
+                  "end": 0.0117,
+                  "children": [
+                    {
+                      "name": "Gelasien",
+                      "color": "#FFEDB3",
+                      "start": 2.58,
+                      "end": 1.8
+                    },
+                    {
+                      "name": "Calabrien",
+                      "color": "#FFF2BA",
+                      "start": 1.8,
+                      "end": 0.774
+                    },
+                    {
+                      "name": "Chibaien",
+                      "color": "#FFF2C7",
+                      "start": 0.774,
+                      "end": 0.129
+                    },
+                    {
+                      "name": "Laat-Pleistoceen",
+                      "color": "#FFF2D3",
+                      "start": 0.129,
+                      "end": 0.0117
+                    }
+                  ]
+                },
+                {
+                  "name": "Holoceen",
+                  "color": "#FEEBD2",
+                  "start": 0.0117,
+                  "end": 0,
+                  "children": [
+                    {
+                      "name": "Greenlandien",
+                      "color": "#FEECDB",
+                      "start": 0.0117,
+                      "end": 0.0082
+                    },
+                    {
+                      "name": "Northgrippien",
+                      "color": "#FDECE4",
+                      "start": 0.0082,
+                      "end": 0.0042
+                    },
+                    {
+                      "name": "Meghalayen",
+                      "color": "#FDEDEC",
+                      "start": 0.0042,
+                      "end": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
